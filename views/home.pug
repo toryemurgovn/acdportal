@@ -1,5 +1,45 @@
 extends layout
 
 block content
-  | Welcome
-
+  .pricing-header.px-3.py-3.pt-md-5.pb-md-4.mx-auto.text-center
+    h1.display-4 Courses pricing
+    p.lead
+      | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+  .container
+    .card-deck.mb-3.text-center
+      .card.mb-4.box-shadow
+        .card-header
+          h4.my-0.font-weight-normal Blockchain 101
+        .card-body
+          h1.card-title.pricing-card-title
+            | $10
+          ul.list-unstyled.mt-3.mb-4
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+          a.btn.btn-lg.btn-block.btn-outline-primary(href='/sign-up') Sign up for free
+      .card.mb-4.box-shadow
+        .card-header
+          h4.my-0.font-weight-normal Blockchain 201
+        .card-body
+          h1.card-title.pricing-card-title
+            | $15 
+          ul.list-unstyled.mt-3.mb-4
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+          a.btn.btn-lg.btn-block.btn-primary(href='/sign-in') Get started
+      .card.mb-4.box-shadow
+        .card-header
+          h4.my-0.font-weight-normal Blockchain 301
+        .card-body
+          h1.card-title.pricing-card-title
+            | $29 
+          ul.list-unstyled.mt-3.mb-4
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+          a.btn.btn-lg.btn-block.btn-primary(href='#') Contact us

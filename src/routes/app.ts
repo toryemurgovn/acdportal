@@ -12,5 +12,7 @@ router.use("/*", (req, res, next) => {
 });
 
 router.get("/", homeController.index);
+router.get("/sign-in", homeController.signIn);
+router.get("/sign-up", homeController.signUp);
 
 module.exports = router;
