@@ -48,17 +48,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.use(flash());
 
-app.use(
-  express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
-);
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
-
 
 app.use((req, res, next) => {
   res.locals.user = req.user;
@@ -80,6 +74,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use(
+//   express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+// );
+app.use(express.static(path.join(__dirname, "assets")));
 /**
  * Primary app routes.
  */
