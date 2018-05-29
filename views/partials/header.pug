@@ -1,46 +1,13 @@
-//- <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-
-
-//-   <a class="btn btn-bd-download d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="https://github.com/twbs/bootstrap/archive/v4.1.1.zip">Download</a>
-//- </header>
-
-header.navbar.navbar-expand.navbar-dark.bg-primary
-  .container
-    .navbar-header
-      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(href='/')
-        i.fa.fa-cube
-        | EmurgoVN
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        //- li(class=(title == 'Home') ? 'active' : undefined)
-        //-   a(href='/') Home
-        //- li(class=(title == 'API Examples') ? 'active' : undefined)
-        //-   a(href='/api') API Examples
-        //- li(class=(title == 'Contact') ? 'active' : undefined)
-        //-   a(href='/contact') Contact
-      ul.nav.navbar-nav.navbar-right
-        if !user
-          li(class=(title == 'Login') ? 'active' : undefined)
-            a(href='/login') Login
-          li(class=(title == 'Create Account') ? 'active' : undefined)
-            a(href='/signup') Create Account
-        else
-          li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
-            a.dropdown-toggle(href='#', data-toggle='dropdown')
-              if user.profile.picture
-                img(src=user.profile.picture, alt=(user.profile.name || user.email || user.id))
-              else
-                img(src=user.gravatar(60), alt=(user.profile.name || user.email || user.id))
-              span= user.profile.name || user.email || user.id
-              i.caret
-            ul.dropdown-menu
-              li
-                a(href='/account') My Account
-              li.divider
-              li
-                a(href='/logout') Logout
+.d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.box-shadow
+  h5.my-0.mr-md-auto.font-weight-normal
+    a.btn.btn-outline-success(href='/') Emurgo Vietnam
+  nav.my-2.my-md-0.mr-md-3
+    a.p-2.text-dark(href='/') Courses
+    if !user
+      a.p-2.text-dark(href='/sign-in') Sign in
+    end
+  if !user    
+    a.btn.btn-outline-primary(href='/sign-up') Sign up
+  else
+    a.btn.btn-primary(href='/dashboard') Dashboard
+  end

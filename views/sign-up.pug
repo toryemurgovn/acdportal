@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    form.form-signin(_lpchecked='1')
+        .text-center.mb-4
+            h1.h3.mb-3.font-weight-normal Sign up
+        .form-label-group
+            input#inputUserName.form-control(type='text', placeholder='Username', required='', autofocus='')
+            label(for='inputUserName') Username
+        .form-label-group
+            input#inputPassword.form-control(type='password', placeholder='Password', required='')
+            label(for='inputPassword') Password
+        .form-label-group
+            input#inputConfirmPassword.form-control(type='password', placeholder='Confirm Password', required='')
+            label(for='inputConfirmPassword') Confirm Password
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign up
+        p.mt-3.text-center
+            a(href='/sign-in') Sign in
