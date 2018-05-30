@@ -1,17 +1,17 @@
 extends layout
 
 block content
-    form.form-signin(action="/sign-in", method="POST")
-        .text-center.mb-4
-            h1.h3.mb-3.font-weight-normal Sign in
-        .form-label-group
-            input#inputUserName.form-control(name='email', type='email', placeholder='Email', required='', autofocus='')
-            label(for='inputUserName') Email
-        .form-label-group
-            input#inputPassword.form-control(name='password', type='password', placeholder='Password', required='')
-            label(for='inputPassword') Password
-        button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
-        p.mt-3.text-center
-            | Not registered? 
-            a(href='/sign-up') Create an account
+  form.form-signin(action="/sign-in", method="POST")
+    .text-center.mb-4
+      h1.h3.mb-3.font-weight-normal Sign in
+    .form-label-group
+      input#inputUserName.form-control(name='email', type='email', placeholder='Email', required='', autofocus='')
+      label(for='inputUserName') Email
+    .form-label-group
+      input#inputPassword.form-control(name='password', type='password', placeholder='Password', required='')
+      label(for='inputPassword') Password
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+    p.mt-3.text-center
+      | Not registered? 
+      a(href='/sign-up') Create an account
 

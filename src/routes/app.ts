@@ -3,6 +3,7 @@ import { Router } from  "express";
 // Controllers (route handlers)
 import * as homeController from "../controllers/home";
 import * as userController from "../controllers/user";
+import * as dashboardController from "../controllers/dashboard";
 import * as assignmentController from "../controllers/assignment";
 const router = Router();
 
@@ -19,6 +20,8 @@ router.get("/sign-in", userController.signIn);
 router.post("/sign-in", userController.postSignIn);
 router.get("/sign-up", userController.signUp);
 router.post("/sign-up", userController.postSignUp);
+
+router.get("/dashboard", dashboardController.index);
 
 router.get("/blockchain101/assignment/transaction", assignmentController.transaction);
 router.get("/blockchain101/assignment/block", assignmentController.block);
