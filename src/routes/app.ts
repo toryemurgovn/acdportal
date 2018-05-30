@@ -14,13 +14,11 @@ router.use("/*", (req, res, next) => {
 });
 
 router.get("/", homeController.index);
-router.get("/signup", userController.register);
-router.post("/signup", userController.postRegister);
-router.get("/login", userController.getLogin);
-router.get("/logout", userController.getLogout);
-router.post("/login", userController.postLogin);
-router.get("/sign-in", homeController.signIn);
-router.get("/sign-up", homeController.signUp);
+// router.get("/logout", userController.getLogout);
+router.get("/sign-in", userController.signIn);
+router.post("/sign-in", userController.postSignIn);
+router.get("/sign-up", userController.signUp);
+router.post("/sign-up", userController.postSignUp);
 
 router.get("/blockchain101/assignment/transaction", assignmentController.transaction);
 router.get("/blockchain101/assignment/block", assignmentController.block);

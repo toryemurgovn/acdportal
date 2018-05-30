@@ -7,24 +7,14 @@ import { WriteError } from "mongodb";
 const request = require("express-validator");
 import "../config/passport";
 
-/**
- * GET /login
- * Login page.
- */
-export let getLogin = (req: Request, res: Response) => {
+export let signIn = (req: Request, res: Response) => {
   if (req.user) {
     return res.redirect("/");
   }
-  res.render("user/login", {
-    title: "Login"
-  });
+  res.render("sign-in");
 };
 
-/**
- * POST /login
- * Sign in using email and password.
- */
-export let postLogin = (req: Request, res: Response, next: NextFunction) => {
+export let postSignIn = (req: Request, res: Response, next: NextFunction) => {
   req.assert("email", "Email is not valid").isEmail();
   req.assert("password", "Password cannot be blank").notEmpty();
   req.sanitize("email").normalizeEmail({ gmail_remove_dots: false });
@@ -33,13 +23,13 @@ export let postLogin = (req: Request, res: Response, next: NextFunction) => {
 
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/login");
+    return res.redirect("/sign-in");
   }
   passport.authenticate("local", (err: Error, user: UserModel, info: IVerifyOptions) => {
     if (err) { return next(err); }
     if (!user) {
       req.flash("errors", <any> { msg: info.message });
-      return res.redirect("/login");
+      return res.redirect("/sign-in");
     }
     req.logIn(user, (err) => {
       if (err) { return next(err); }
@@ -55,20 +45,15 @@ export let getLogout = (req: Request, res: Response) => {
     res.redirect("/");
   });
 };
-/**
- * GET /
- * Home page
- */
-export let register = (req: Request, res: Response, next: NextFunction) => {
+
+export let signUp = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     return res.redirect("/");
   }
-  res.render("user/register", {
-    title: "Registration"
-  });
+  res.render("sign-up");
 };
 
-export let postRegister = (req: Request, res: Response, next: NextFunction) => {
+export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
   req.assert("email", "Email is not valid").isEmail();
   req.assert("password", "Password must be at least 4 characters long").len({ min: 4 });
   req.assert("confirmPassword", "Passwords do not match").equals(req.body.password);
@@ -77,7 +62,7 @@ export let postRegister = (req: Request, res: Response, next: NextFunction) => {
   const errors = <any> req.validationErrors();
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/signup");
+    return res.redirect("/sign-up");
   }
   const user = new User({
     email: req.body.email,
