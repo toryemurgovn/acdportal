@@ -1,0 +1,8 @@
+h1= title
+form(action="/signup", method="POST")
+  input(name="email" type="text" placeholder="Input Email")
+  input(name="password" type="password" placeholder="Input password")
+  input(name="confirmPassword" type="password" placeholder="Input re-password")
+  button(type="submit") Submit
+hr
+include ../partials/flash
