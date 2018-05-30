@@ -14,7 +14,7 @@ router.use("/*", (req, res, next) => {
 });
 
 router.get("/", homeController.index);
-// router.get("/logout", userController.getLogout);
+router.get("/sign-out", userController.getLogout);
 router.get("/sign-in", userController.signIn);
 router.post("/sign-in", userController.postSignIn);
 router.get("/sign-up", userController.signUp);
