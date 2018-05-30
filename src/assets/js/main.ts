@@ -1,5 +1,12 @@
 $(document).ready( () => {
 
+    const alert: any = $(".alert");
+    if (alert.length > 0) {
+        window.setTimeout(() => {
+            alert.alert("close");
+        }, 3000);
+    }
+
     const navListItems = $("div.setup-panel div a"),
           allWells = $(".setup-content"),
           allNextBtn = $(".nextBtn");

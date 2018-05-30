@@ -73,7 +73,7 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
     if (err) { next(err); }
     if (existingUser) {
       req.flash("errors", <any>  { msg: "Account with that email address already exists." });
-      return res.redirect("/");
+      return res.redirect("/sign-up");
     }
     user.save((err) => {
       if (err) { next(err); }
