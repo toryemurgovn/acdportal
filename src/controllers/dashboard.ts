@@ -20,3 +20,17 @@ export let courses = (req: Request, res: Response) => {
     }
     res.render("dashboard/courses");
 };
+
+export let packages = (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.redirect("/sign-in");
+    }
+    res.render("dashboard/packages");
+};
+
+export let packageDetail = (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.redirect("/sign-in");
+    }
+    res.render("dashboard/package-detail");
+};
