@@ -64,7 +64,7 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
     req.flash("errors", errors);
     return res.redirect("/sign-up");
   }
-  const user = <any> new User({
+  const user = new User({
     email: req.body.email,
     password: req.body.password
   });

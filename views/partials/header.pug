@@ -2,14 +2,12 @@
   h5.my-0.mr-md-auto.font-weight-normal
     a.btn.btn-outline-success(href='/') Emurgo Vietnam
   nav.my-2.my-md-0.mr-md-3
-    a.btn.btn-outline-success.p-2.text-dark(href="/pa/index") Partner - Dashboard
-    a.btn.btn-outline-success.p-2.text-dark(href="/sign-out") Sign Out
     a.p-2.text-dark(href='/') Courses
     if !user
       a.p-2.text-dark(href='/sign-in') Sign in
     end
-    if !user
-      a.btn.btn-outline-primary(href='/sign-up') Sign up
-    else
-      a.btn.btn-primary(href='/dashboard') Dashboard
-    end
+  if !user    
+    a.btn.btn-outline-primary(href='/sign-up') Sign up
+  else
+    a.btn.btn-primary(href='/dashboard') Dashboard
+  end
