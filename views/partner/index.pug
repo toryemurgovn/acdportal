@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h3 List packages of Partner
+  ul.partner-package
+    for package in listPackage
+      li
+        .info
+          | Package: ID: #{package.id} Quantity: #{package.quantity} + Can create code? #{package.status}
+        a.btn.btn-outline-success(href="/pa/package/" + package.id) view code
