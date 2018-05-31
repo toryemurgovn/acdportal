@@ -1,4 +1,5 @@
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "dashboard";
 
 html {
     font-size: 14px;
@@ -130,10 +131,10 @@ html {
     width: 100%;
     position: relative;
 }
-.stepwizard-step button[disabled] {
+// .stepwizard-step button[disabled] {
     /*opacity: 1 !important;
     filter: alpha(opacity=100) !important;*/
-}
+// }
 .stepwizard .btn.disabled, .stepwizard .btn[disabled], .stepwizard fieldset[disabled] .btn {
     opacity:1 !important;
     color:#bbb;

@@ -22,6 +22,8 @@ router.get("/sign-up", userController.signUp);
 router.post("/sign-up", userController.postSignUp);
 
 router.get("/dashboard", dashboardController.index);
+router.get("/dashboard/profile", dashboardController.profile);
+router.get("/dashboard/courses", dashboardController.courses);
 
 router.get("/blockchain101/assignment/transaction", assignmentController.transaction);
 router.get("/blockchain101/assignment/block", assignmentController.block);
