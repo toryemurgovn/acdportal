@@ -9,7 +9,7 @@ import "../config/passport";
 
 export let signIn = (req: Request, res: Response) => {
   if (req.user) {
-    return res.redirect("/");
+    return res.redirect("/dashboard");
   }
   res.render("sign-in");
 };
@@ -34,7 +34,7 @@ export let postSignIn = (req: Request, res: Response, next: NextFunction) => {
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       req.flash("success", <any> { msg: "Success! You are logged in." });
-      res.redirect(req.session.returnTo || "/");
+      res.redirect(req.session.returnTo || "/dashboard");
     });
   })(req, res, next);
 };
@@ -73,7 +73,7 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
     if (err) { next(err); }
     if (existingUser) {
       req.flash("errors", <any>  { msg: "Account with that email address already exists." });
-      return res.redirect("/");
+      return res.redirect("/sign-up");
     }
     user.save((err) => {
       if (err) { next(err); }

@@ -9,18 +9,6 @@ import { default as Code, CodeModel } from "../models/Code";
 
 const request = require("express-validator");
 
-export let index = (req: Request, res: Response) => {
-  const partner = req.user;
-  Package.find({partner_id: partner.id}, (err, listPackage) => {
-    res.render("partner/index", {
-      title: "Welcome",
-      partner: partner,
-      listPackage: listPackage
-    });
-  });
-};
-
-
 export let application = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     return res.redirect("/");
@@ -37,7 +25,7 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
   const errors = <any> req.validationErrors();
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/sign-up");
+    return res.redirect("/sign-up-partner");
   }
   const user = <any> new User({
     email: req.body.email,
@@ -49,7 +37,7 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
     if (err) { next(err); }
     if (existingUser) {
       req.flash("errors", <any>  { msg: "Account with that email address already exists." });
-      return res.redirect("/");
+      return res.redirect("/sign-up-partner");
     }
     user.save((err) => {
       if (err) { next(err); }
@@ -62,7 +50,7 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
         if (err) {
           next(err);
         }
-        return res.redirect("/");
+        return res.redirect("/dashboard");
       });
     });
   });
@@ -104,7 +92,7 @@ export let generateCodePackage =  (req: Request, res: Response, next: NextFuncti
       Code.insertMany(codes, (err, docs) => {
         if (err) { console.log(err); next(); }
       });
-      return res.redirect("/pa/package/" + packageData._id);
+      return res.redirect("/dashboard/packages/" + packageData._id);
     }
   });
 };

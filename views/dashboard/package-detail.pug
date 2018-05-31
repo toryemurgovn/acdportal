@@ -1,0 +1,27 @@
+extends ../dashboard-layout
+
+block content
+  .mt-3.mb-5
+    form(action="/pa/" + package._id + "/gen" method="post")
+      a.btn.btn-outline-primary(href='/dashboard/packages')
+        | Back to list
+      unless codes.length
+        button.ml-3.btn.btn-success(type="submit") Generate new code
+      end
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Created at
+        th(scope='col') Inputed at
+        th(scope='col') User's email
+        th(scope='col') 
+    tbody
+      for code, index in codes
+        tr
+          th(scope='row')= index + 1
+          td= code.createdAt
+          td Jun 02 2018
+          td= code.user_id
+          td 
+            button.btn.btn-outline-danger.btn-sm ×
