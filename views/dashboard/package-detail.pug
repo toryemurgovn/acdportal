@@ -1,0 +1,25 @@
+extends ../dashboard-layout
+
+block content
+  //- <button type="button" class="btn btn-outline-primary">Primary</button>
+  .mt-3.mb-5
+    a.btn.btn-outline-primary(href='/dashboard/packages')
+      | Back to list
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Created at
+        th(scope='col') Inputed at
+        th(scope='col') User's email
+        th(scope='col') 
+    tbody
+      tr
+        th(scope='row') 1
+        td May 31 2018
+        td Jun 02 2018
+        td user@emurgovn.io
+        td 
+          button.btn.btn-outline-danger.btn-sm ×
+          //- button.close(type='button', data-dismiss='alert', aria-label='Close')
+          //-   span(aria-hidden='true') ×
