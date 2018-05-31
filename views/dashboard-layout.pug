@@ -34,9 +34,17 @@ html(lang='en')
             .bd-toc-item
               a.bd-toc-link(href='/dashboard/profile')
                 | Profile
-            .bd-toc-item
-              a.bd-toc-link(href='/dashboard/courses')
-                | Courses                
+            if user && user.role !== "partner"
+              .bd-toc-item
+                a.bd-toc-link(href='/dashboard/courses')
+                  | Courses               
+            end                
+   
+            if user && user.role === "partner"
+              .bd-toc-item
+                a.bd-toc-link(href='/dashboard/packages')
+                  | Packages                 
+            end
         main.col-12.col-md-9.col-xl-10.pr-md-5.pl-md-5.bd-content(role='main')
           block content
     script(src='/js/jquery.slim.js')

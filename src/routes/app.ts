@@ -52,10 +52,9 @@ router.use("/pa/*", configPassport.isPartner, (req, res, next) => {
   next();
 });
 
-router.get("/pa/index", partnerController.index);
-router.get("/join-partner", partnerController.application);
-router.post("/join-partner", partnerController.postApplication);
-router.get("/pa/package/:id", partnerController.viewPackage);
+router.get("/sign-up-partner", partnerController.application);
+router.post("/sign-up-partner", partnerController.postApplication);
+
 router.post("/pa/:id/gen", partnerController.generateCodePackage);
 
 module.exports = router;

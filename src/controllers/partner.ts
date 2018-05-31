@@ -9,18 +9,6 @@ import { default as Code, CodeModel } from "../models/Code";
 
 const request = require("express-validator");
 
-export let index = (req: Request, res: Response) => {
-  const partner = req.user;
-  Package.find({partner_id: partner.id}, (err, listPackage) => {
-    res.render("partner/index", {
-      title: "Welcome",
-      partner: partner,
-      listPackage: listPackage
-    });
-  });
-};
-
-
 export let application = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     return res.redirect("/");
@@ -37,7 +25,7 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
   const errors = <any> req.validationErrors();
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/sign-up");
+    return res.redirect("/sign-up-partner");
   }
   const user = <any> new User({
     email: req.body.email,
@@ -49,26 +37,26 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
     if (err) { next(err); }
     if (existingUser) {
       req.flash("errors", <any>  { msg: "Account with that email address already exists." });
-      return res.redirect("/");
+      return res.redirect("/sign-up-partner");
     }
     user.save((err) => {
       if (err) { next(err); }
       const pack = partnerPackageDefault(user);
       pack.save((error) => {
         console.log(err);
-        if (err) { next(err);}
-      })
+        if (err) { next(err); }
+      });
       req.logIn(user, (err) => {
         if (err) {
           next(err);
         }
-        return res.redirect("/");
+        return res.redirect("/dashboard");
       });
     });
   });
 };
 
-let partnerPackageDefault = (partner) => {
+const partnerPackageDefault = (partner) => {
   console.log("Create default package for partner: " + partner.id);
   return new Package({
     partner_id: partner.id,
@@ -82,7 +70,7 @@ export let viewPackage = (req: Request, res: Response, next: NextFunction) => {
   const package_id = req.params.id;
   console.log("ID ne: " + package_id);
   Package.findOne({_id: package_id}, (err, packageData) => {
-    if (err) { console.log(err); return next(err);}
+    if (err) { console.log(err); return next(err); }
     const pId = packageData["id"];
     console.log(packageData);
     Code.find({package_id: pId}).limit(10).exec((err, codes) => {
@@ -98,20 +86,20 @@ export let viewPackage = (req: Request, res: Response, next: NextFunction) => {
 export let generateCodePackage =  (req: Request, res: Response, next: NextFunction) => {
   const package_id = req.params.id;
   Package.findOne({_id: package_id}, (err, packageData) => {
-    if (err) { console.log(err); return next(err);}
+    if (err) { console.log(err); return next(err); }
     if (packageData) {
       const codes = genCode(packageData);
       Code.insertMany(codes, (err, docs) => {
-        if (err) { console.log(err); next();}
+        if (err) { console.log(err); next(); }
       });
-      return res.redirect("/pa/package/" + packageData._id);
+      return res.redirect("/dashboard/packages/" + packageData._id);
     }
   });
 };
 
-let genCode = (data) => {
-  let codes = [];
-  let code = {
+const genCode = (data) => {
+  const codes = [];
+  const code = {
     package_id: data._id,
     partner_id: data.partner_id,
     status: true
@@ -123,4 +111,4 @@ let genCode = (data) => {
   }
   console.log(codes);
   return codes;
-}
+};

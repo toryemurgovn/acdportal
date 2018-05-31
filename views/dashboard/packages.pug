@@ -12,32 +12,20 @@ block content
         th(scope='col') Course
         th(scope='col') Expired in
         th(scope='col') Quantity
+        th(scope='col') Available
         th(scope='col') Created at
+        th(scope='col') 
     tbody
-      tr
-        th(scope='row') 1
-        td Blockchain 101
-        td 6 Months
-        td 100
-        td May 31 2018
-      tr
-        th(scope='row') 2
-        td Blockchain 101
-        td 6 Months
-        td 100
-        td May 31 2018
-      tr
-        th(scope='row') 3
-        td Blockchain 101
-        td 6 Months
-        td 100
-        td May 31 2018
-      tr
-        th(scope='row') 4
-        td Blockchain 101
-        td 6 Months
-        td 100
-        td May 31 2018           
+      each package, index in listPackage
+        tr
+          th(scope='row') #{index + 1}
+          td Blockchain 101
+          td 6 Months
+          td #{package.quantity}
+          td #{package.status}
+          td May 31 2018
+          td 
+            a.btn.btn-outline-primary.btn-sm(href='/dashboard/packages/' + package.id) View
 
   #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
