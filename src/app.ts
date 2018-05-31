@@ -27,7 +27,7 @@ const mongoUrl = MONGODB_URI;
 (<any>mongoose).Promise = bluebird;
 mongoose.connect(mongoUrl, {}).then(
   () => {
-     console.log("Connect and run the migration data")
+    console.log("Connect and run the migration data");
   },
 ).catch(err => {
   console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
