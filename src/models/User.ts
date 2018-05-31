@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 export type UserModel = mongoose.Document & {
   email: string,
   password: string,
-  role: { type: string, default: "user" },
   comparePassword: comparePasswordFunction,
 };
 
@@ -14,7 +13,6 @@ type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatc
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
-  role: { type: String, default: "user" },
 }, { timestamps: true });
 
 /**
@@ -38,10 +36,6 @@ const comparePassword: comparePasswordFunction = function (candidatePassword, cb
     cb(err, isMatch);
   });
 };
-
-/**
- * Custom methods
- */
 
 userSchema.methods.comparePassword = comparePassword;
 
