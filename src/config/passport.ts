@@ -75,3 +75,12 @@ export let isAuthorized = (req: Request, res: Response, next: NextFunction) => {
     res.redirect(`/auth/${provider}`);
   }
 };
+
+export let isPartner = (req: Request, res: Response, next: NextFunction) => {
+  const user = req.user;
+  if (user && user.role === "partner") {
+    next();
+  } else {
+    res.redirect("/permission-denied");
+  }
+};
