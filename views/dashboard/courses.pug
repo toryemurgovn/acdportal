@@ -9,27 +9,30 @@ block content
         th(scope='col') Last studied at
         th(scope='col') Progress
     tbody
-      tr
-        th(scope='row') 1
-        td Blockchain 101
-        td May 31 2018
-        td
-          .progress
-            .progress-bar(role='progressbar', style='width: 25%;', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100') 25%
+      if user.role === "user"
+        include user/courses
+      else
+        tr
+          th(scope='row') 1
+          td Blockchain 101
+          td May 31 2018
+          td
+            .progress
+              .progress-bar(role='progressbar', style='width: 25%;', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100') 25%
 
-      tr
-        th(scope='row') 2
-        td Blockchain 201
-        td May 20 2018
-        td
-          .progress
-            .progress-bar(role='progressbar', style='width: 2%;', aria-valuenow='2', aria-valuemin='0', aria-valuemax='100') 2%
+        tr
+          th(scope='row') 2
+          td Blockchain 201
+          td May 20 2018
+          td
+            .progress
+              .progress-bar(role='progressbar', style='width: 2%;', aria-valuenow='2', aria-valuemin='0', aria-valuemax='100') 2%
 
-      tr
-        th(scope='row') 3
-        td Blockchain 301
-        td May 20 2018
-        td
-          .progress
-            .progress-bar(role='progressbar', style='width: 0%;', aria-valuenow='0', aria-valuemin='0', aria-valuemax='100') 0%
+        tr
+          th(scope='row') 3
+          td Blockchain 301
+          td May 20 2018
+          td
+            .progress
+              .progress-bar(role='progressbar', style='width: 0%;', aria-valuenow='0', aria-valuemin='0', aria-valuemax='100') 0%
 

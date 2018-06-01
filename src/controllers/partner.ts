@@ -72,11 +72,8 @@ const genCode = (data) => {
     partner_id: data.partner_id,
     status: true
   };
-  console.log("gen code: ");
-  console.log(data);
   for (let i = 0; i < data.quantity; i++) {
     codes.push(code);
   }
-  console.log(codes);
   return codes;
 };

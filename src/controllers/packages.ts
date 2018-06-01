@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { default as Package } from "../models/Package";
 import { default as Code } from "../models/Code";
+import { default as Course, CourseModel } from "../models/Course";
 
 export let index = (req: Request, res: Response) => {
   if (!req.user) {
@@ -17,14 +18,15 @@ export let create = (req: Request, res: Response) => {
     return res.json({ message: "Please sign in.", errorCode: 401 });
   }
   const partner = req.user;
-  const packageModel = createPackage(partner, req.body);
-  packageModel.save((error) => {
-    console.log(error);
-    if (error) {
-      return res.json({ message: error, errorCode: 422 });
-    }
+  const packageModel = createPackage(partner, req.body).then((_package: any) => {
+    _package.save((error) => {
+      console.log(error);
+      if (error) {
+        return res.json({ message: error, errorCode: 422 });
+      }
+    });
+    res.json(packageModel);
   });
-  res.json(packageModel);
 };
 
 export let show = (req: Request, res: Response) => {
@@ -57,12 +59,16 @@ export let show = (req: Request, res: Response) => {
   });
 };
 
-const createPackage = (partner, params) => {
-  console.log("Create package for partner: " + partner.id);
-  return new Package({
-    partner_id: partner.id,
-    quantity: params.quantity,
-    describle: params.describle,
-    status: true
+const createPackage = async (partner, params) => {
+  await Course.findOne({}, (err, exisCourse) => { // just get first course for testing
+    console.log("Create package for partner: " + partner.id);
+    params.course_id = exisCourse._id;
+    return new Package({
+      partner_id: partner.id,
+      quantity: params.quantity,
+      describle: params.describle,
+      course_id: params.course_id,
+      status: true
+    });
   });
 };
