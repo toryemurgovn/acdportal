@@ -49,17 +49,47 @@ $(document).ready(() => {
 });
 
 const getPackages = () => {
-
+  $.ajax({
+    url: "/api/packages"
+  }).done((data) => {
+    console.log(data);
+  });
 };
 
 const registerPackage = () => {
+  const quantity: any = $("#inputQuantity").val();
+  if (quantity) {
+    $.ajax({
+      url: "/api/packages",
+      method: "POST",
+      dataType: "json",
+      data: { quantity: parseInt(quantity) }
+    }).done((data) => {
+      // console.log(data);
+      // const modalPopup: any = $("#registerPackageModel");
+      // modalPopup.modal("hide");
+      location.reload();
+    });
+  } else {
 
+  }
 };
 
-const getPackageDetail = () => {
-
+const getPackageDetail = (id) => {
+  $.ajax({
+    url: `/api/packages/${id}`
+  }).done((data) => {
+    console.log(data);
+  });
 };
 
-const generateLicenseCode = () => {
-
+const generateLicenseCode = (id, email) => {
+  $.ajax({
+    url: `/api/packages/${id}`,
+    method: "POST",
+    dataType: "json",
+    data: { email: email }
+  }).done((data) => {
+    console.log(data);
+  });
 };
