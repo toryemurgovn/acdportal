@@ -83,13 +83,21 @@ const getPackageDetail = (id) => {
   });
 };
 
-const generateLicenseCode = (id, email) => {
+const generateLicenseCode = () => {
+  // url: `/api/packages/${id}`,
+  const packageId = $("#packageId").val();
+  const email = $("#inputEmail").val();
+  if (!packageId) {
+    return;
+  }
   $.ajax({
-    url: `/api/packages/${id}`,
+    url: `/pa/${packageId}/gen`,
     method: "POST",
     dataType: "json",
     data: { email: email }
   }).done((data) => {
-    console.log(data);
+    location.reload();
+  }).fail((data) => {
+    location.reload();
   });
 };

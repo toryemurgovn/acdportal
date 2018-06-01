@@ -11,6 +11,7 @@ import flash from "express-flash";
 import expressValidator from "express-validator";
 import passport from "passport";
 import { MONGODB_URI, SESSION_SECRET, CACHE_CONTROL } from "./util/secrets";
+import moment from "moment";
 
 const MongoStore = mongo(session);
 
@@ -71,5 +72,6 @@ app.use(express.static(path.join(__dirname, "assets"), CACHE_CONTROL));
  */
 const appRoutes = require("./routes/app");
 app.use("/", appRoutes);
+app.locals.moment = moment;
 
 export default app;
