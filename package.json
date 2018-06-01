@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/toryemurgovn/acdportal#readme",
   "dependencies": {
+    "@types/lodash": "^4.14.109",
     "bcrypt-nodejs": "0.0.3",
     "bootstrap": "^4.1.1",
     "connect-mongo": "^2.0.1",
