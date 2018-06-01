@@ -47,3 +47,19 @@ $(document).ready(() => {
 
   $("div.setup-panel div a.btn-success").trigger("click");
 });
+
+const getPackages = () => {
+
+};
+
+const registerPackage = () => {
+
+};
+
+const getPackageDetail = () => {
+
+};
+
+const generateLicenseCode = () => {
+
+};

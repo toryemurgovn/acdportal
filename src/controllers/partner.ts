@@ -43,8 +43,8 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
       if (err) { next(err); }
       const pack = partnerPackageDefault(user);
       pack.save((error) => {
-        console.log(err);
-        if (err) { next(err); }
+        console.log(error);
+        if (error) { next(error); }
       });
       req.logIn(user, (err) => {
         if (err) {

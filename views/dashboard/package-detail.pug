@@ -5,8 +5,8 @@ block content
     form(action="/pa/" + package._id + "/gen" method="post")
       a.btn.btn-outline-primary(href='/dashboard/packages')
         | Back to list
-      unless codes.length
-        button.ml-3.btn.btn-success(type="submit") Generate new code
+      if package.status
+        button.ml-3.btn.btn-success(type='button', data-toggle="modal", data-target="#generateCodeModal") Generate new code
       end
   table.table
     thead
@@ -25,3 +25,17 @@ block content
           td= code.user_id
           td 
             button.btn.btn-outline-danger.btn-sm ×
+  #generateCodeModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='generateCodeModal', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Generate new license code
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          .form-group
+            label(for='inputEmail') User email
+            input#inputEmail.form-control(type='email', placeholder='User email')
+        .modal-footer
+          button.btn.btn-light(type='button', data-dismiss='modal') Cancel
+          button.btn.btn-primary(type='button') Submit
