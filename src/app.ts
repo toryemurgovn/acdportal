@@ -46,8 +46,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.use(session({ cookie: { maxAge: 6000000 },
                   secret: process.env.SESSION_SECRET,
-                  resave: false,
-                  saveUninitialized: false}));
+                  resave: true,
+                  store: new MongoStore({
+                    url: mongoUrl,
+                    autoReconnect: true
+                  }),
+                  saveUninitialized: true}));
 
 app.use(passport.initialize());
 app.use(passport.session());

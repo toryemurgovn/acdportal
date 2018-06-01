@@ -41,43 +41,11 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
     }
     user.save((err) => {
       if (err) { next(err); }
-      const pack = partnerPackageDefault(user);
-      pack.save((error) => {
-        console.log(err);
-        if (err) { next(err); }
-      });
       req.logIn(user, (err) => {
         if (err) {
           next(err);
         }
         return res.redirect("/dashboard");
-      });
-    });
-  });
-};
-
-const partnerPackageDefault = (partner) => {
-  console.log("Create default package for partner: " + partner.id);
-  return new Package({
-    partner_id: partner.id,
-    quantity: 1000,
-    describle: "Default package",
-    status: true
-  });
-};
-
-export let viewPackage = (req: Request, res: Response, next: NextFunction) => {
-  const package_id = req.params.id;
-  console.log("ID ne: " + package_id);
-  Package.findOne({_id: package_id}, (err, packageData) => {
-    if (err) { console.log(err); return next(err); }
-    const pId = packageData["id"];
-    console.log(packageData);
-    Code.find({package_id: pId}).limit(10).exec((err, codes) => {
-      console.log(codes);
-      res.render("partner/package", {
-        codes: codes,
-        package: packageData,
       });
     });
   });

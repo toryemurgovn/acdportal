@@ -3,7 +3,7 @@ extends ../dashboard-layout
 block content
   //- <button type="button" class="btn btn-outline-primary">Primary</button>
   .mt-3.mb-5
-    button.btn.btn-outline-primary(type='button', data-toggle="modal", data-target="#exampleModal")
+    button.btn.btn-outline-primary(type='button', data-toggle="modal", data-target="#registerPackageModel")
       | Register new package
   table.table
     thead
@@ -27,7 +27,7 @@ block content
           td 
             a.btn.btn-outline-primary.btn-sm(href='/dashboard/packages/' + package.id) View
 
-  #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+  #registerPackageModel.modal.fade(tabindex='-1', role='dialog', aria-labelledby='registerPackageModel', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
       .modal-content
         .modal-header

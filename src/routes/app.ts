@@ -1,4 +1,4 @@
-import { Router } from  "express";
+import { Router } from "express";
 
 // Controllers (route handlers)
 import * as homeController from "../controllers/home";
@@ -8,6 +8,7 @@ import * as assignmentController from "../controllers/assignment";
 import * as codeController from "../controllers/code";
 import * as configPassport from "../config/passport";
 import * as partnerController from "../controllers/partner";
+import * as packagesController from "../controllers/packages";
 const router = Router();
 
 // middleware that is specific to this router
@@ -56,5 +57,12 @@ router.get("/sign-up-partner", partnerController.application);
 router.post("/sign-up-partner", partnerController.postApplication);
 
 router.post("/pa/:id/gen", partnerController.generateCodePackage);
+
+router.route("/api/packages")
+  .post(packagesController.create)
+  .get(packagesController.index);
+
+router.route("/api/packages/:id")
+  .get(packagesController.show);
 
 module.exports = router;
