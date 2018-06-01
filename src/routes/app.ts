@@ -40,8 +40,10 @@ router.get("/dashboard/packages", dashboardController.packages);
 router.get("/dashboard/packages/:id", dashboardController.packageDetail);
 
 router.get("/blockchain101/assignment/transaction", assignmentController.transaction);
+router.post("/blockchain101/assignment/transaction/:id", assignmentController.transactionMechanisms);
 router.get("/blockchain101/assignment/block", assignmentController.block);
 router.get("/blockchain101/assignment/quiz", assignmentController.quiz);
+router.post("/blockchain101/assignment/quiz", assignmentController.submitQuizzes);
 
 router.get("/free-course", (req, res) => {
   res.send("free course page");

@@ -10,7 +10,8 @@ import bluebird from "bluebird";
 import flash from "express-flash";
 import expressValidator from "express-validator";
 import passport from "passport";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET, CACHE_CONTROL } from "./util/secrets";
+import moment from "moment";
 
 const MongoStore = mongo(session);
 
@@ -65,11 +66,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, "assets"), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, "assets"), CACHE_CONTROL));
 /**
  * Primary app routes.
  */
 const appRoutes = require("./routes/app");
 app.use("/", appRoutes);
+app.locals.moment = moment;
 
 export default app;

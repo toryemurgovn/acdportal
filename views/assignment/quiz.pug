@@ -1,17 +1,22 @@
 extends ../layout
 
 block content
-  form.form-signin(_lpchecked='1')
-    .text-center.mb-4
-      h1.h3.mb-3.font-weight-normal Sign in
-    .form-label-group
-      input#inputUserName.form-control(type='text', placeholder='Username', required='', autofocus='')
-      label(for='inputUserName') Username
-    .form-label-group
-      input#inputPassword.form-control(type='password', placeholder='Password', required='')
-      label(for='inputPassword') Password
-    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
-    p.mt-3.text-center
-      | Not registered? 
-      a(href='/sign-up') Create an account
-
+  .container
+    .row
+      .col-12
+        - const optionlables = ["A", "B", "C", "D"];
+        form.mt-5(action="", method="POST")
+          each q, i in data
+            .form-group
+              label!= (i + 1) + " - " + q.question
+              each option, j in q.options
+                - const questionNumber = "question_" + (i+1);
+                - const questionOption = questionNumber + "_" + j;
+                - const choise = questionOption == q.choise ? true : false;
+                - const answer = choise ?  q.flag ? "is-valid" : "is-invalid"  : "";
+                .form-check
+                  input.form-check-input(id=questionOption, type = "radio", name = questionNumber, value = questionOption, checked = choise, class=answer)
+                  label.form-check-label(for = questionOption)!= optionlables[j] + ") " + option
+              hr
+          button.btn.btn-primary(type="submit")
+            | Submit

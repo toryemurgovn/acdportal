@@ -1,17 +1,154 @@
 extends ../layout
 
 block content
-  form.form-signin(_lpchecked='1')
-    .text-center.mb-4
-      h1.h3.mb-3.font-weight-normal Sign in
-    .form-label-group
-      input#inputUserName.form-control(type='text', placeholder='Username', required='', autofocus='')
-      label(for='inputUserName') Username
-    .form-label-group
-      input#inputPassword.form-control(type='password', placeholder='Password', required='')
-      label(for='inputPassword') Password
-    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
-    p.mt-3.text-center
-      | Not registered? 
-      a(href='/sign-up') Create an account
+  include error-modal
+  .container
+    ol.mt-5
+      li
+        .row
+          .col-12
+            h4
+              | Make a genesis block
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                button#jsubmit5.btn.btn-primary(type="submit") Submit
+                small.form-text.text-muted
+                  | Click button to generate a genesis block
 
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush
+              li.list-group-item
+                code.text-uppercase
+                  | Genesis BLOCK INFO:
+                p.jblock1info
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Hash a block's fields and data (except the timestamp)
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+              button#jsubmit6.btn.btn-primary(type="submit") Submit
+              small.form-text.text-muted
+                | Click button to see a block and its hash
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush
+              li.list-group-item
+                code.text-uppercase
+                  | BLOCK INFO
+                p.jblock2info
+              li.list-group-item
+                code.text-uppercase
+                  | BLOCK HASH
+                p.jblock2hash
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Change the nonce to see how the hash is affected
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                label(for="block3nonce") Nonce
+                input#block3nonce.form-control(type="text" name="block3nonce")
+                small.form-text.text-muted
+                  | Input an integer
+              button#jsubmit7.btn.btn-primary(type="submit") Submit
+
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush
+              li.list-group-item
+                code.text-uppercase
+                  | BLOCK INFO
+                p.jblock3info
+              li.list-group-item
+                code.text-uppercase
+                  | BLOCK HASH
+                p.jblock3hash
+
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Time how long it takes to find a nonce that meets a difficulty requirement
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                label(for="block4name") Name
+                input#block4name.form-control(type="text" name="block4name")
+                small.form-text.text-muted
+                  | Recipient for a transaction inside the block
+              .form-group
+                label(for="block4amount") Amount
+                input#block4amount.form-control(type="number" name="block4amount")
+              .form-group
+                label(for="block4diff") Difficulty (number of zeros at the beginning of the hash)
+                input#block4diff.form-control(type="text" name="block4difficult")
+                small.form-text.text-muted
+                  | Input an integer no more then 5
+              button#jsubmit8.btn.btn-primary(type="submit") Submit
+
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush
+              li.list-group-item
+                code.text-uppercase
+                  | Time of process:
+                p.jblock4time
+              li.list-group-item
+                code.text-uppercase
+                  | Info:
+                p.jblock4info
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Calculate the Merkle intermediate and root hashes from a set of 8 data elements
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              each v in [1, 2, 3, 4, 5, 6, 7, 8]  
+                .form-group
+                  label(for='block5data' + v)= 'Data #' + v
+                  input#block5data.form-control.input-data(type='text', name='block5data' + v)
+                  small.form-text.text-muted
+                    | Input anything
+
+              button#jsubmit9.btn.btn-primary(type="submit") Submit
+
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush
+              li.list-group-item
+                code.text-uppercase
+                  | Merkle tree :
+                p.jbock5data
+              
