@@ -31,5 +31,5 @@ migrate-mongo down
 Check status migration
 
 ```
-migrate-mongo stats
+migrate-mongo status
 ```
