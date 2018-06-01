@@ -1,67 +1,174 @@
 extends ../layout
 
 block content
+  include error-modal
   .container
-  .stepwizard
-    .stepwizard-row.setup-panel
-    .stepwizard-step.col-xs-3
-      a.btn.btn-success.btn-circle(href='#step-1', type='button') 1
-      p
-      small Shipper
-    .stepwizard-step.col-xs-3
-      a.btn.btn-default.btn-circle(href='#step-2', type='button', disabled='disabled') 2
-      p
-      small Destination
-    .stepwizard-step.col-xs-3
-      a.btn.btn-default.btn-circle(href='#step-3', type='button', disabled='disabled') 3
-      p
-      small Schedule
-    .stepwizard-step.col-xs-3
-      a.btn.btn-default.btn-circle(href='#step-4', type='button', disabled='disabled') 4
-      p
-      small Cargo
-  form(role='form')
-    #step-1.panel.panel-primary.setup-content
-      .panel-heading
-        h3.panel-title Shipper
-      .panel-body
-        .form-group
-        label.control-label First Name
-        input.form-control(maxlength='100', type='text', required='required', placeholder='Enter First Name')
-        .form-group
-        label.control-label Last Name
-        input.form-control(maxlength='100', type='text', required='required', placeholder='Enter Last Name')
-        button.btn.btn-primary.nextBtn.pull-right(type='button') Next
-    #step-2.panel.panel-primary.setup-content
-      .panel-heading
-        h3.panel-title Destination
-      .panel-body
-        .form-group
-        label.control-label Company Name
-        input.form-control(maxlength='200', type='text', required='required', placeholder='Enter Company Name')
-        .form-group
-        label.control-label Company Address
-        input.form-control(maxlength='200', type='text', required='required', placeholder='Enter Company Address')
-        button.btn.btn-primary.nextBtn.pull-right(type='button') Next
-    #step-3.panel.panel-primary.setup-content
-      .panel-heading
-        h3.panel-title Schedule
-      .panel-body
-        .form-group
-        label.control-label Company Name
-        input.form-control(maxlength='200', type='text', required='required', placeholder='Enter Company Name')
-        .form-group
-        label.control-label Company Address
-        input.form-control(maxlength='200', type='text', required='required', placeholder='Enter Company Address')
-        button.btn.btn-primary.nextBtn.pull-right(type='button') Next
-    #step-4.panel.panel-primary.setup-content
-      .panel-heading
-        h3.panel-title Cargo
-      .panel-body
-        .form-group
-        label.control-label Company Name
-        input.form-control(maxlength='200', type='text', required='required', placeholder='Enter Company Name')
-        .form-group
-        label.control-label Company Address
-        input.form-control(maxlength='200', type='text', required='required', placeholder='Enter Company Address')
-        button.btn.btn-success.pull-right(type='submit') Finish!
+    ol.mt-5
+      li
+        .row
+          .col-12
+            h4
+              | Calculate the hash of very simple transaction
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                label(for = "trs1name") Name
+                input#trs1name.form-control(type = "text", name = "trs1_name")
+                small.form-text.text-muted
+                  | Example: Bob
+              .form-group
+                label(for = "trs1amount") Amount
+                input#trs1amount.form-control(type = "number", name = "trs1_amount")
+              button#jsubmit1.btn.btn-primary(type = "submit") Submit
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush.output-panel
+              li.list-group-item
+                code.text-uppercase
+                  | Name:
+                p.jtrs1name
+              li.list-group-item
+                code.text-uppercase
+                  | Amount:
+                p.jtrs1amount
+              li.list-group-item
+                code.text-uppercase
+                  | Hash:
+                p.jtrs1hash
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Generate a keypair from a passphrase
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                label(for = "trs2passphrase") PASSPHRASE
+                input#trs2Passphrase.form-control(type = "text", name="trs2Passphrase")
+                small.form-text.text-muted
+                  | Example: dontforget
+              button#jsubmit2.btn.btn-primary(type = "submit") Submit
+
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush.output-panel
+              li.list-group-item
+                code.text-uppercase
+                  | PRIVATEKEY:
+                button.jcopytrs2prikey(href="#")
+                  | Copy
+                p.jtrs2prikey
+              li.list-group-item
+                code.text-uppercase
+                  | PUBLICKEY:
+                p.jtrs2pubkey
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Create a signature by using the private key to encrypt the hash of the transaction
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                label(for = "trs3name") Name
+                input#trs3name.form-control(type = "text", name = "trs3name")
+                small.form-text.text-muted
+                  | Example: Bob
+              .form-group
+                label(for = "trs3amount") Amount
+                input#trs3amount.form-control(type = "number", name = "trs3amount")
+              .form-group
+                label(for = "trs3prkey") Private Key
+                input#trs3prkey.form-control(type = "text", name = "trs3prkey")
+                small.form-text.text-muted
+                  | Copy from previous task
+              button#jsubmit3.btn.btn-primary(type = "submit") Submit
+
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush.output-panel
+              li.list-group-item
+                code.text-uppercase
+                  | Name:
+                p.jtrs3name
+              li.list-group-item
+                code.text-uppercase
+                  | Amount:
+                p.jtrs3amount
+              li.list-group-item
+                code.text-uppercase
+                  | Hash:
+                p.jtrs3hash
+              li.list-group-item
+                code.text-uppercase
+                  | SIGNATURE:
+                button.jcopytrs3sign(href="#")
+                  | Copy
+                p.jtrs3signature
+
+        hr
+      li
+        .row
+          .col-12
+            h4
+              | Verify a signature by decrypting it with the public key, then comparing to the transaction hash
+        .row
+          .col-12.col-md-6
+            h3
+              | Input
+            form.p-2
+              .form-group
+                label(for = "trs4name") Name
+                input#trs4name.form-control(type = "text", name = "trs4name")
+                small.form-text.text-muted
+                  | Example: Bob
+              .form-group
+                label(for = "trs4amount") Amount
+                input#trs4amount.form-control(type = "number", name = "trs4amount")
+              .form-group
+                label(for = "trs4pubkey") Public key
+                input#trs4pubkey.form-control(type = "text", name = "trs4pubkey")
+                small.form-text.text-muted
+                  | Copy from task #2
+              .form-group
+                label(for = "trs4sign") Signature
+                input#trs4sign.form-control(type = "text", name = "trs4sign")
+                small.form-text.text-muted
+                  | Copy from previous task
+              button#jsubmit4.btn.btn-primary(type = "submit") Submit
+
+          .col-12.col-md-6
+            h3.w-100
+              | Output
+            ul.list-group.list-group-flush.output-panel
+              li.list-group-item
+                code.text-uppercase
+                  | Name:
+                p.jtrs4name
+              li.list-group-item
+                code.text-uppercase
+                  | Amount:
+                p.jtrs4amount
+              li.list-group-item
+                code.text-uppercase
+                  | Hash:
+                p.jtrs4hash
+              li.list-group-item
+                code.text-uppercase
+                  | validated:
+                p.jtrs4valid
+        hr
