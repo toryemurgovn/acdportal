@@ -9,6 +9,7 @@ import * as codeController from "../controllers/code";
 import * as configPassport from "../config/passport";
 import * as partnerController from "../controllers/partner";
 import * as packagesController from "../controllers/packages";
+import * as tpmController from "../controllers/tpm";
 const router = Router();
 
 // middleware that is specific to this router
@@ -42,6 +43,10 @@ router.get("/dashboard/packages/:id", dashboardController.packageDetail);
 router.get("/blockchain101/assignment/transaction", assignmentController.transaction);
 router.get("/blockchain101/assignment/block", assignmentController.block);
 router.get("/blockchain101/assignment/quiz", assignmentController.quiz);
+
+router.get("/data", tpmController.generateData);
+router.get("/view/course/:id", tpmController.viewCourse);
+router.get("/apply-code/:code", tpmController.applyCode);
 
 router.get("/free-course", (req, res) => {
   res.send("free course page");

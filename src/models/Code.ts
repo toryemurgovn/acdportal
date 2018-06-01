@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt-nodejs";
 import crypto from "crypto";
 import mongoose from "mongoose";
 
@@ -13,8 +12,8 @@ export type CodeModel = mongoose.Document & {
 
 const codeSchema = new mongoose.Schema({
   package_id: { type: String, unique: true },
-  user_id: { type: String, default: "Not assign yet" },
-  partner_id: String,
+  user_id: { type: String, default: "" },
+  partner_id: Schema.Types.ObjectId,
   status: { type: Boolean, default: true } // true = available to use
 }, { timestamps: true });
 

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { default as Package, PackageModel } from "../models/Package";
 import { default as Code, CodeModel } from "../models/Code";
+import { default as Usercourse, UsercourseModel } from "../models/Usercourse";
 
 export let index = (req: Request, res: Response) => {
   if (!req.user) {
@@ -20,7 +21,15 @@ export let courses = (req: Request, res: Response) => {
   if (!req.user) {
     return res.redirect("/sign-in");
   }
-  res.render("dashboard/courses");
+  if (req.user.role === "user") {
+    Usercourse.find({ user_id: req.user._id}, (err, listCourse) => {
+      res.render("dashboard/courses", {
+        courses: listCourse
+      });
+    });
+  } else {
+    res.render("dashboard/courses");
+  }
 };
 
 export let packages = (req: Request, res: Response) => {
