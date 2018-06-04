@@ -22,12 +22,12 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
   req.assert("confirmPassword", "Passwords do not match").equals(req.body.password);
   req.sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
-  const errors = <any> req.validationErrors();
+  const errors = <any>req.validationErrors();
   if (errors) {
     req.flash("errors", errors);
     return res.redirect("/sign-up-partner");
   }
-  const user = <any> new User({
+  const user = <any>new User({
     email: req.body.email,
     password: req.body.password,
     role: "partner"
@@ -36,7 +36,7 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (err) { next(err); }
     if (existingUser) {
-      req.flash("errors", <any>  { msg: "Account with that email address already exists." });
+      req.flash("errors", <any>{ msg: "Account with that email address already exists." });
       return res.redirect("/sign-up-partner");
     }
     user.save((err) => {
@@ -51,29 +51,39 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
   });
 };
 
-export let generateCodePackage =  (req: Request, res: Response, next: NextFunction) => {
+export let generateCodePackage = (req: Request, res: Response, next: NextFunction) => {
   const package_id = req.params.id;
-  Package.findOne({_id: package_id}, (err, packageData) => {
-    if (err) { console.log(err); return next(err); }
+  Package.findOne({ _id: package_id }, (err, packageData) => {
+    if (err) {
+      console.log(err);
+      return res.json({ message: err.message, errorCode: 422 });
+    }
     if (packageData) {
       const codes = genCode(packageData);
+      console.log(codes);
       Code.insertMany(codes, (err, docs) => {
-        if (err) { console.log(err); next(); }
+        if (err) {
+          console.log(err);
+          return res.json({ message: err.message, errorCode: 422 });
+        }
+        return res.json({ docs });
       });
-      return res.redirect("/dashboard/packages/" + packageData._id);
+    } else {
+      return res.json({ message: "Package does not exist.", errorCode: 422 });
     }
   });
 };
 
 const genCode = (data) => {
-  const codes = [];
+  // const codes = [];
   const code = {
     package_id: data._id,
     partner_id: data.partner_id,
     status: true
   };
-  for (let i = 0; i < data.quantity; i++) {
-    codes.push(code);
-  }
-  return codes;
+  // for (let i = 0; i < data.quantity; i++) {
+  //   codes.push(code);
+  // }
+  return code;
+  // return codes;
 };

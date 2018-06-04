@@ -11,7 +11,7 @@ export type CodeModel = mongoose.Document & {
 };
 
 const codeSchema = new mongoose.Schema({
-  package_id: { type: String, unique: true },
+  package_id: { type: String, required: true },
   user_id: { type: String, default: "" },
   partner_id: Schema.Types.ObjectId,
   status: { type: Boolean, default: true } // true = available to use

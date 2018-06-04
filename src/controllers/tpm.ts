@@ -8,14 +8,14 @@ import { default as Package, PackageModel } from "../models/Package";
  * GET /
  * Home page.
  */
-export let generateData = (req: Request, res: Response) => {
-  console.log("Gen course");
-  const courseData = [{name: "Blockchain 101"}, {name: "Blockchain 102"}, {name: "Blockchain 103"}];
-  Course.insertMany(courseData, (err, docs) => {
-    if (err) { console.log("Can't generate Course content"); }
-  });
-  res.send("Done - Please check log");
-};
+// export let generateData = (req: Request, res: Response) => {
+//   console.log("Gen course");
+//   const courseData = [{name: "Blockchain 101"}, {name: "Blockchain 102"}, {name: "Blockchain 103"}];
+//   Course.insertMany(courseData, (err, docs) => {
+//     if (err) { console.log("Can't generate Course content"); }
+//   });
+//   res.send("Done - Please check log");
+// };
 
 export let viewCourse = (req: Request, res: Response) => {
   res.send("View course: " + req.params.id);
