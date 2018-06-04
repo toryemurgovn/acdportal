@@ -14,7 +14,7 @@ block content
       each course in courses
         tr
           th(scope='row') 1
-          td= course.name
+          td= course.course_name
           td= moment(course.createdAt).format('MMM DD YYYY')  
   #inputCodeToLearn.modal.fade(tabindex='-1', role='dialog', aria-labelledby='inputCodeToLearn', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
