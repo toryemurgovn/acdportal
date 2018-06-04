@@ -63,9 +63,8 @@ export let packageDetail = (req: Request, res: Response, next: NextFunction) => 
   Package.findOne({ _id: package_id }, (err, packageData) => {
     if (err) { console.log(err); return next(err); }
     const pId = packageData["id"];
-    console.log(packageData);
-    Code.find({ package_id: pId }).limit(10).exec((err, codes) => {
-      console.log(codes);
+    Code.find({ package_id: pId }).exec((err, codes) => {
+      // console.log(codes);
       res.render("dashboard/package-detail", {
         codes: codes,
         package: packageData,

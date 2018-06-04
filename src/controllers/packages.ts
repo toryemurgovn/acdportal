@@ -50,7 +50,7 @@ export let show = (req: Request, res: Response) => {
     }
     if (packageData) {
       const pId = packageData["id"];
-      console.log(packageData);
+      // console.log(packageData);
       Code.find({ package_id: pId }).limit(10).exec((err, codes) => {
         console.log(codes);
         res.json({
