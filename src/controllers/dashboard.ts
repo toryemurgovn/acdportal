@@ -8,7 +8,11 @@ export let index = (req: Request, res: Response) => {
   if (!req.user) {
     return res.redirect("/sign-in");
   }
-  res.render("dashboard/index");
+  Course.find({}, function (err, courses) {
+    res.render("dashboard/index", {
+      courses: courses
+    });
+  });
 };
 
 export let profile = (req: Request, res: Response) => {
@@ -23,7 +27,7 @@ export let courses = (req: Request, res: Response) => {
     return res.redirect("/sign-in");
   }
   if (req.user.role === "user") {
-    Usercourse.find({ user_id: req.user._id}, (err, listCourse) => {
+    Usercourse.find({ user_id: req.user._id }, (err, listCourse) => {
       res.render("dashboard/courses", {
         courses: listCourse
       });
@@ -38,7 +42,7 @@ export let packages = (req: Request, res: Response) => {
     return res.redirect("/sign-in");
   }
   const partner = req.user;
-  Course.find({}, function(err, courses) {
+  Course.find({}, function (err, courses) {
     Package.find({ partner_id: partner.id }, (err, listPackage) => {
       res.render("dashboard/packages", {
         partner: partner,
@@ -46,7 +50,7 @@ export let packages = (req: Request, res: Response) => {
         courses: courses
       });
     });
- });
+  });
 };
 
 export let packageDetail = (req: Request, res: Response, next: NextFunction) => {

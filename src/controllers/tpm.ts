@@ -17,9 +17,9 @@ import { default as Package, PackageModel } from "../models/Package";
 //   res.send("Done - Please check log");
 // };
 
-export let viewCourse = (req: Request, res: Response) => {
-  res.send("View course: " + req.params.id);
-};
+// export let viewCourse = (req: Request, res: Response) => {
+//   res.send("View course: " + req.params.id);
+// };
 
 export let applyCode = (req: Request, res: Response) => {
   console.log("User apply code");
