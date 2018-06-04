@@ -106,6 +106,23 @@ const generateLicenseCode = () => {
   });
 };
 
+const inputLicenseCode = () => {
+  const licenseCode = $("#inputCode").val();
+  if (!licenseCode) {
+    return;
+  }
+  $.ajax({
+    url: "/apply-code",
+    method: "POST",
+    dataType: "json",
+    data: { code: licenseCode }
+  }).done((data) => {
+    location.reload();
+  }).fail((data) => {
+    // location.reload();
+  });
+};
+
 $(document).ready(function () {
   const jAssignment1 = $("#jsubmit1");
   const jAssignment2 = $("#jsubmit2");

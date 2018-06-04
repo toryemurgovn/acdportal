@@ -48,7 +48,7 @@ router.post("/blockchain101/assignment/quiz", assignmentController.submitQuizzes
 
 // router.get("/data", tpmController.generateData);
 // router.get("/view/course/:id", tpmController.viewCourse);
-router.get("/apply-code/:code", tpmController.applyCode);
+router.post("/apply-code", tpmController.applyCode);
 
 router.get("/free-course", (req, res) => {
   res.send("free course page");

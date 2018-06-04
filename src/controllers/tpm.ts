@@ -24,21 +24,25 @@ import { default as Package, PackageModel } from "../models/Package";
 export let applyCode = (req: Request, res: Response) => {
   console.log("User apply code");
   if (req.user && req.user.role === "user") {
-    const code = req.params.code;
+    const code = req.body.code;
     console.log(" UserID " + req.user._id + "  apply code: " + code);
     Code.findById(code, (err, codeInfo: any) => {
       if (err) { console.log("Error"); }
       if (codeInfo) {
-        if (codeInfo.status == false || !codeInfo.user_id) {
-          res.send("Your code has been used");
+        if (codeInfo.status == false || codeInfo.user_id) {
+          return res.json({ message: "Your code has been used", errorCode: 422 });
         }
         // valide code
         // update code status
-      // Need Catch by Transaction her
+        // Need Catch by Transaction her
         codeInfo.user_id = req.user._id;
+        codeInfo.user_email = req.user.email;
+        codeInfo.inputed_at = new Date();
         codeInfo.status = false;
-        codeInfo.save(function(err) {
-          if (err) throw err;
+        codeInfo.save(function (err) {
+          if (err) {
+            return res.json({ message: err.message, errorCode: 422 });
+          }
           console.log("Code successfully updated!");
         });
         Package.findById(codeInfo.package_id, (err, partnerPackage: any) => {
@@ -54,14 +58,14 @@ export let applyCode = (req: Request, res: Response) => {
             userCode.save((err) => {
               console.log("Error when save User Code");
             });
-            return res.send("Success - Apply code for use");
+            return res.json({ userCode });
           });
         });
-      // Done transaction
+        // Done transaction
       }
     });
 
   } else {
-    res.send("Can not apply");
+    return res.json({ message: "Can not apply", errorCode: 422 });
   }
 };
