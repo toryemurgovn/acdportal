@@ -12,19 +12,22 @@ block content
     thead
       tr
         th(scope='col') #
+        th(scope='col') Code
         th(scope='col') Created at
         th(scope='col') Inputed at
         th(scope='col') User's email
-        th(scope='col') 
+        //- th(scope='col') 
     tbody
       for code, index in codes
         tr
           th(scope='row')= index + 1
+          td
+            code= code.id
           td= moment(code.createdAt).format('MMM DD YYYY') 
-          td Jun 02 2018
-          td= code.user_id
-          td 
-            button.btn.btn-outline-danger.btn-sm ×
+          td= code.inputed_at ? moment(code.inputed_at).format('MMM DD YYYY') : ''
+          td= code.user_email
+          //- td 
+          //-   button.btn.btn-outline-danger.btn-sm ×
   #generateCodeModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='generateCodeModal', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
       .modal-content
