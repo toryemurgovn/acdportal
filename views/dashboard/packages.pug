@@ -10,7 +10,7 @@ block content
       tr
         th(scope='col') #
         th(scope='col') Course
-        th(scope='col') Expired in
+        //- th(scope='col') Expired in
         th(scope='col') Quantity
         th(scope='col') Available
         th(scope='col') Created at
@@ -19,8 +19,8 @@ block content
       each package, index in listPackage
         tr
           th(scope='row') #{index + 1}
-          td Blockchain 101
-          td 6 Months
+          td= package.course.name
+          //- td 6 Months
           td #{package.quantity}
           td #{package.status}
           td= moment(package.createdAt).format('MMM DD YYYY') 
@@ -38,18 +38,17 @@ block content
           .form-group
             label(for='inputCourse') Select course
             select#inputCourse.form-control
-              option(disabled, selected) -- select an option --
-              option Blockchain 101
-              option Blockchain 201
-              option Blockchain 301
-          .form-group
-            label(for='inputTime') Expired in
-            select#inputTime.form-control
-              option(disabled, selected) -- select an option --
-              option 1 month
-              option 3 months
-              option 6 months
-              option 1 year
+              option(disabled, selected) -- select an option --            
+              each course in courses
+                option(value=course.id)=course.name
+          //- .form-group
+          //-   label(for='inputTime') Expired in
+          //-   select#inputTime.form-control
+          //-     option(disabled, selected) -- select an option --
+          //-     option 1 month
+          //-     option 3 months
+          //-     option 6 months
+          //-     option 1 year
           .form-group
             label(for='inputQuantity') Quantity
             input#inputQuantity.form-control(type='number', placeholder='Quantity')

@@ -58,12 +58,16 @@ const getPackages = () => {
 
 const registerPackage = () => {
   const quantity: any = $("#inputQuantity").val();
+  const course_id = $("#inputCourse").val();
   if (quantity) {
     $.ajax({
       url: "/api/packages",
       method: "POST",
       dataType: "json",
-      data: { quantity: parseInt(quantity) }
+      data: {
+        quantity: parseInt(quantity),
+        course_id: course_id
+      }
     }).done((data) => {
       // console.log(data);
       // const modalPopup: any = $("#registerPackageModel");

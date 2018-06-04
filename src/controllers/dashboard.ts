@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { default as Package, PackageModel } from "../models/Package";
 import { default as Code, CodeModel } from "../models/Code";
 import { default as Usercourse, UsercourseModel } from "../models/Usercourse";
+import { default as Course } from "../models/Course";
 
 export let index = (req: Request, res: Response) => {
   if (!req.user) {
@@ -37,12 +38,15 @@ export let packages = (req: Request, res: Response) => {
     return res.redirect("/sign-in");
   }
   const partner = req.user;
-  Package.find({ partner_id: partner.id }, (err, listPackage) => {
-    res.render("dashboard/packages", {
-      partner: partner,
-      listPackage: listPackage
+  Course.find({}, function(err, courses) {
+    Package.find({ partner_id: partner.id }, (err, listPackage) => {
+      res.render("dashboard/packages", {
+        partner: partner,
+        listPackage: listPackage,
+        courses: courses
+      });
     });
-  });
+ });
 };
 
 export let packageDetail = (req: Request, res: Response, next: NextFunction) => {
