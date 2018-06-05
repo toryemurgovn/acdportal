@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { quizzesData } from "../util/quizzes";
 import * as _ from "lodash";
 import * as childProcess from "child_process";
+import { default as Course } from "../models/Course";
 
 const execFileSync = childProcess.execFileSync;
 
@@ -16,19 +17,33 @@ export let block = (req: Request, res: Response) => {
 };
 
 export let quiz = (req: Request, res: Response) => {
-  res.render("assignment/quiz", {
-    data: quizzesData
+  if (!req.user) {
+    return res.redirect("/sign-in");
+  }
+  const courseId = req.params.id;
+
+  Course.findOne({ _id: courseId }, (error, course: any) => {
+    res.render("assignment/quiz", {
+      data: course.questions
+    });
   });
 };
 
 export let submitQuizzes = (req: Request, res: Response) => {
-  const questions = checkQuestions(req.body);
-  res.render("assignment/quiz", {
-    data: questions
+  if (!req.user) {
+    return res.redirect("/sign-in");
+  }
+  const courseId = req.params.id;
+
+  Course.findOne({ _id: courseId }, (error, course: any) => {
+    const questions = checkQuestions(req.body, course.questions);
+    res.render("assignment/quiz", {
+      data: questions
+    });
   });
 };
 
-const checkQuestions = (data: any) => {
+const checkQuestions = (data: any, quizzesData) => {
   const questions = _.cloneDeep(quizzesData);
   for (let i = 0; i < questions.length; i++) {
     const key = "question_" + (i + 1);
@@ -39,6 +54,7 @@ const checkQuestions = (data: any) => {
         questions[i]["flag"] = true;
       }
     }
+    break;
   }
   return questions;
 };
