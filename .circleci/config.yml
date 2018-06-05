@@ -34,8 +34,12 @@ jobs:
           command: 'sudo npm install -g migrate-mongo'
 
       - run:
-          name: Run migrations
+          name: Copy env for circle ci
           command: 'cp circleci.env .env'
+
+      - run:
+          name: Run migrations
+          command: 'migrate-mongo up'
 
       - run: npm install
       - run: npm run build
