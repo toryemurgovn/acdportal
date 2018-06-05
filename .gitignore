@@ -16,3 +16,6 @@
 
 bower_components
 node_modules
+
+# Coverage reports
+coverage
