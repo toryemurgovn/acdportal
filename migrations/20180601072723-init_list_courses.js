@@ -3,7 +3,6 @@
 module.exports = {
 
   up(db, next) {
-    // TODO write your migration here
     var courses = db.collection('courses');
     var currentTime = new Date();
     courses.insert({name: 'Blockchain 101', __v: 0, createdAt: currentTime, updatedAt: currentTime});
