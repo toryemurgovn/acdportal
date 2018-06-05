@@ -1,0 +1,33 @@
+extends ../dashboard-layout
+
+block content
+  .mt-3.mb-5
+    button.btn.btn-outline-primary(type='button', data-toggle="modal", data-target="#inputCodeToLearn")
+      | Input code to learn
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Course name
+        th(scope='col') Created at
+    tbody
+      each course in courses
+        tr
+          th(scope='row') 1
+          td= course.course_name
+          td= moment(course.createdAt).format('MMM DD YYYY')  
+  #inputCodeToLearn.modal.fade(tabindex='-1', role='dialog', aria-labelledby='inputCodeToLearn', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Input code
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          .form-group
+            label(for='inputCode') Code
+            input#inputCode.form-control(type='text', placeholder='Code')
+
+        .modal-footer
+          button.btn.btn-light(type='button', data-dismiss='modal') Cancel
+          button.btn.btn-primary(type='button', onclick="inputLicenseCode()") Submit

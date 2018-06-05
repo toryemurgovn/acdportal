@@ -1,0 +1,57 @@
+extends ../dashboard-layout
+
+block content
+  .mt-3.mb-5
+    button.btn.btn-outline-primary(type='button', data-toggle="modal", data-target="#registerPackageModel")
+      | Register new package
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Course
+        //- th(scope='col') Expired in
+        th(scope='col') Quantity
+        th(scope='col') Available
+        th(scope='col') Created at
+        th(scope='col') 
+    tbody
+      each package, index in listPackage
+        tr
+          th(scope='row') #{index + 1}
+          td= package.course.name
+          //- td 6 Months
+          td #{package.quantity}
+          td #{package.status}
+          td= moment(package.createdAt).format('MMM DD YYYY') 
+          td 
+            a.btn.btn-outline-primary.btn-sm(href='/dashboard/packages/' + package.id) View
+
+  #registerPackageModel.modal.fade(tabindex='-1', role='dialog', aria-labelledby='registerPackageModel', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Register new package
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          .form-group
+            label(for='inputCourse') Select course
+            select#inputCourse.form-control
+              option(disabled, selected) -- select an option --            
+              each course in courses
+                option(value=course.id)=course.name
+          //- .form-group
+          //-   label(for='inputTime') Expired in
+          //-   select#inputTime.form-control
+          //-     option(disabled, selected) -- select an option --
+          //-     option 1 month
+          //-     option 3 months
+          //-     option 6 months
+          //-     option 1 year
+          .form-group
+            label(for='inputQuantity') Quantity
+            input#inputQuantity.form-control(type='number', placeholder='Quantity')
+
+        .modal-footer
+          button.btn.btn-light(type='button', data-dismiss='modal') Cancel
+          button.btn.btn-primary(type='button', onclick="registerPackage()") Submit

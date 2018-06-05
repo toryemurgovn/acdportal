@@ -1,0 +1,14 @@
+.d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.box-shadow
+  h5.my-0.mr-md-auto.font-weight-normal
+    a.btn.btn-outline-success(href='/') Emurgo Vietnam
+  nav.my-2.my-md-0.mr-md-3
+    //- a.btn.btn-outline-success.p-2.text-dark(href="/pa/index") Partner - Dashboard
+    a.p-2.text-dark(href='/') Courses
+    if !user
+      a.p-2.text-dark(href='/sign-in') Sign in
+    end
+    if !user
+      a.btn.btn-outline-primary(href='/sign-up') Sign up
+    else
+      a.btn.btn-primary(href='/dashboard') Dashboard
+    end

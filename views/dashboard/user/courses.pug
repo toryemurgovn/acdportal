@@ -1,0 +1,9 @@
+for course, i in courses 
+  tr
+    th(scope='row')= i
+    td
+      a(href="/view/course/"+ course.course_id)= course.course_name
+    td= moment(course.createdAt).format('MMM DD YYYY') 
+    td
+      .progress
+        .progress-bar(role='progressbar', style='width: 25%;', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100') 25%

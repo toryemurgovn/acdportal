@@ -1,17 +1,48 @@
-doctype html
-html(lang='')
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title #{title} - Emurgo Vietnam
-    meta(name='description', content='')
-    meta(name='theme-color' content='#4DA5F4')
-    meta(name='csrf-token', content=_csrf)
-    link(rel='shortcut icon', href='/images/favicon.png')
+extends layout
 
-  body
-    | Welcome
+block content
+  .pricing-header.px-3.py-3.pt-md-5.pb-md-4.mx-auto.text-center
+    h1.display-4 Courses pricing
+    p.lead
+      | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+  .text-center.mb-5
+    a.btn.btn-lg.btn-outline-primary(href='/sign-up-partner') You want to be our partner.      
+  .container
+    .card-deck.mb-3.text-center
+      .card.mb-4.box-shadow
+        .card-header
+          h4.my-0.font-weight-normal Blockchain 101
+        .card-body
+          h1.card-title.pricing-card-title
+            | $10
+          ul.list-unstyled.mt-3.mb-4
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+          a.btn.btn-lg.btn-block.btn-outline-primary(href='/sign-up') Sign up for free
+      .card.mb-4.box-shadow
+        .card-header
+          h4.my-0.font-weight-normal Blockchain 201
+        .card-body
+          h1.card-title.pricing-card-title
+            | $15 
+          ul.list-unstyled.mt-3.mb-4
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+          a.btn.btn-lg.btn-block.btn-primary(href='/sign-in') Get started
+      .card.mb-4.box-shadow
+        .card-header
+          h4.my-0.font-weight-normal Blockchain 301
+        .card-body
+          h1.card-title.pricing-card-title
+            | $29 
+          ul.list-unstyled.mt-3.mb-4
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+            li Lorem Ipsum is simply
+          a.btn.btn-lg.btn-block.btn-primary(href='#') Contact us
   
-    block inlinejs
-

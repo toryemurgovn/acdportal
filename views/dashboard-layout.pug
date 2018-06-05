@@ -1,0 +1,53 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title #{title} - EmurgoVN
+    meta(name='description', content='')
+    meta(name='theme-color' content='#4DA5F4')
+    meta(name='csrf-token', content=_csrf)
+    link(rel='shortcut icon', href='/images/favicon.png')
+    link(rel='stylesheet', href='/css/main.css')
+
+  body
+    header.navbar.navbar-expand.navbar-dark.flex-column.flex-md-row.bd-navbar
+      ul.navbar-nav.flex-row.ml-md-auto.md-flex
+        li.nav-item.dropdown
+          a#bd-versions.nav-item.nav-link.dropdown-toggle.mr-md-2(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            if user
+              span= user.email || user.id
+            else
+              span= 'Dummy'
+            end            
+          .dropdown-menu.dropdown-menu-right(aria-labelledby='bd-versions')
+            a.dropdown-item(href='/dashboard/profile') Profile
+            a.dropdown-item(href='/sign-out') Sign out
+    .container-fluid
+      .row.flex-xl-nowrap
+        .col-12.col-md-3.col-xl-2.bd-sidebar
+          nav#bd-docs-nav.bd-links.collapse.show(style='')
+            .bd-toc-item
+              a.bd-toc-link(href='/dashboard')
+                | Dashboard
+            .bd-toc-item
+              a.bd-toc-link(href='/dashboard/profile')
+                | Profile
+            if user && user.role !== "partner"
+              .bd-toc-item
+                a.bd-toc-link(href='/dashboard/courses')
+                  | Courses               
+            end                
+   
+            if user && user.role === "partner"
+              .bd-toc-item
+                a.bd-toc-link(href='/dashboard/packages')
+                  | Packages                 
+            end
+        main.col-12.col-md-9.col-xl-10.pr-md-5.pl-md-5.bd-content(role='main')
+          block content
+    script(src='/js/jquery.js')
+    script(src='/js/bootstrap.js')
+    script(src='/js/popper.js')
+    script(src='/js/main.js')
