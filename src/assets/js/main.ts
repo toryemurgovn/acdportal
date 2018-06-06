@@ -45,7 +45,23 @@ $(document).ready(() => {
     if (isValid) nextStepWizard.removeAttr("disabled").trigger("click");
   });
 
-  $("div.setup-panel div a.btn-success").trigger("click");
+  $(".jRequestPackage").on("click", function(event) {
+    event.preventDefault();
+    const data = {
+      id: $(this).data("id"),
+      action: $(this).data("action")
+    };
+
+    $.ajax({
+      url: "/api/admin/package-status",
+      method: "POST",
+      dataType: "json",
+      data: {package: data}
+    }).done((data) => {
+      console.log(data);
+      location.reload();
+    });
+  });
 });
 
 const getPackages = () => {

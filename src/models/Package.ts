@@ -11,7 +11,7 @@ export type PackageModel = mongoose.Document & {
   course: CourseModel,
   quantity: { type: number, default: 100 },
   describe: string,
-  status: { type: boolean, default: true } // true = available to use
+  status: { type: number, default: 0 } // 0 = pendding, 1 = active, 2 = disactived
 };
 
 const packageSchema = new mongoose.Schema({
@@ -20,7 +20,7 @@ const packageSchema = new mongoose.Schema({
   describe: String,
   course_id: {type: Schema.Types.ObjectId, required: true},
   course: {type: Object, required: true},
-  status: { type: Boolean, default: true } // true = available to use
+  status: { type: Number, default: 0 } // true = available to use
 }, { timestamps: true });
 
 const Package = mongoose.model("Package", packageSchema);
