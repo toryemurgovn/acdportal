@@ -15,30 +15,45 @@ describe("GET /sign-up", () => {
   });
 });
 
-// describe("POST /sign-up", () => {
-//   it("should return some defined error message with valid parameters", (done) => {
-//     return request(app).post("/login")
-//       .field("email", "john@me.com")
-//       .field("password", "Hunter2")
-//       .expect(302)
-//       .end(function(err, res) {
-//         expect(res.error).not.to.be.undefined;
-//         done();
-//       });
-
-//   });
-// });
-
 describe("POST /sign-in", () => {
-  it("should return some defined error message with valid parameters", (done) => {
+  it("should return error message with invalid account", (done) => {
     return request(app).post("/sign-in")
-      .field("email", "john@me.com")
-      .field("password", "Hunter2")
+      .type("form")
+      .field("email", "user@me.com")
+      .field("password", "password")
       .expect(302)
-      .end(function(err, res) {
+      .end(function (err, res) {
         expect(res.error).not.toBeUndefined;
         done();
       });
+
+  });
+});
+
+describe("POST /sign-up", () => {
+  it("should return error message", (done) => {
+    request(app).post("/sign-up")
+      .set("accept", "json")
+      .send({ email: "user@me.com", password: "password" })
+      .end(function (err, res) {
+        expect(res.error).not.toBeUndefined;
+        done();
+      })
+      .expect(302);
+
+  });
+});
+
+describe("POST /sign-up", () => {
+  it("should return 200", (done) => {
+    request(app).post("/sign-up")
+      .set("accept", "json")
+      .send({ email: "user@me.com", password: "password", confirmPassword: "password" })
+      .end(function (err, res) {
+        expect(res.error).not.toBeUndefined;
+        done();
+      })
+      .expect(200);
 
   });
 });

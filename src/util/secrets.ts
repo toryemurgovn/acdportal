@@ -13,7 +13,10 @@ export const ENVIRONMENT = process.env.NODE_ENV;
 const prod = ENVIRONMENT === "production"; // Anything else is treated as 'dev'
 
 export const SESSION_SECRET = process.env["SESSION_SECRET"];
-export const MONGODB_URI = prod ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
+export let MONGODB_URI = prod ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
+if (ENVIRONMENT === "test") {
+  MONGODB_URI = process.env["MONGODB_URI_TEST"];
+}
 export const CACHE_CONTROL = prod ? { maxAge: 31557600000 } : { maxAge: 0 };
 
 if (!SESSION_SECRET) {
