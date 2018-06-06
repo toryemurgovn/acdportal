@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Request, Response, NextFunction } from "express";
 import { default as User, UserModel } from "../models/User";
+import { default as Code, CodeModel } from "../models/Code";
 import { IVerifyOptions } from "passport-local";
 import { WriteError } from "mongodb";
 
@@ -75,14 +76,28 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
       req.flash("errors", <any>  { msg: "Account with that email address already exists." });
       return res.redirect("/sign-up");
     }
-    user.save((err) => {
+    user.save((err, objUser) => {
       if (err) { next(err); }
       req.logIn(user, (err) => {
         if (err) {
           next(err);
         }
+        acceptCoursebyEmail(user).then(() => {});
         return res.redirect("/");
       });
     });
+  });
+};
+
+const acceptCoursebyEmail = async (user) => {
+  const updateInfo = {
+    user_id: user._id,
+    status: false,
+    inputed_at: new Date()
+  };
+  await Code.update({user_email: user.email}, updateInfo, {multi: true}, (err, res) => {
+    if (err) {
+      console.log("log: error for update user Code");
+    }
   });
 };

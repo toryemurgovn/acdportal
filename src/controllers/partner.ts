@@ -55,18 +55,19 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
   const package_id = req.params.id;
   Package.findOne({ _id: package_id }, (err, packageData) => {
     if (err) {
-      console.log(err);
       return res.json({ message: err.message, errorCode: 422 });
     }
     if (packageData) {
-      const codes = genCode(packageData);
-      console.log(codes);
-      Code.insertMany(codes, (err, docs) => {
-        if (err) {
-          console.log(err);
-          return res.json({ message: err.message, errorCode: 422 });
+      genCode((req.body.email || ""), packageData).then((codeData) => {
+        if (codeData) {
+          const codeObj = new Code(codeData);
+          codeObj.save((err, docs) => {
+            if (err) {
+              return res.json({ message: err.message.toString(), errorCode: 422 });
+            }
+            return res.json({ docs });
+          });
         }
-        return res.json({ docs });
       });
     } else {
       return res.json({ message: "Package does not exist.", errorCode: 422 });
@@ -74,16 +75,30 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
   });
 };
 
-const genCode = (data) => {
-  // const codes = [];
+const genCode = async (email: string, data: any) => {
   const code = {
-    package_id: data._id,
-    partner_id: data.partner_id,
-    status: true
-  };
-  // for (let i = 0; i < data.quantity; i++) {
-  //   codes.push(code);
-  // }
+      package_id: data._id,
+      user_id: "",
+      partner_id: data.partner_id,
+      user_email: email,
+      status: true
+    };
+  if (email) {
+    await User.findOne({email: email}, (err, objUser: any) => {
+      if (err) { return code; }
+      if (objUser) {
+        code.user_id = objUser._id;
+        code["inputed_at"] = new Date();
+        code.status = false;
+      } else {
+        sendInvitation(email);
+      }
+    });
+  }
   return code;
-  // return codes;
+};
+
+const sendInvitation = (email) => {
+  // send email to user
+  console.log("Sending ... email to user");
 };
