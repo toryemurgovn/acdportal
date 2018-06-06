@@ -12,6 +12,7 @@ import expressValidator from "express-validator";
 import passport from "passport";
 import { MONGODB_URI, SESSION_SECRET, CACHE_CONTROL } from "./util/secrets";
 import moment from "moment";
+import * as middleware from "./routes/middleware";
 
 const MongoStore = mongo(session);
 

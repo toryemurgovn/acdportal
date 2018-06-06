@@ -10,6 +10,7 @@ import * as configPassport from "../config/passport";
 import * as partnerController from "../controllers/partner";
 import * as packagesController from "../controllers/packages";
 import * as tpmController from "../controllers/tpm";
+import * as middleware from "./middleware";
 const router = Router();
 
 // middleware that is specific to this router
@@ -45,6 +46,17 @@ router.post("/blockchain101/assignment/transaction/:id", assignmentController.tr
 router.get("/blockchain101/assignment/block", assignmentController.block);
 router.get("/blockchain101/assignment/quiz", assignmentController.quiz);
 router.post("/blockchain101/assignment/quiz", assignmentController.submitQuizzes);
+
+/**
+ * As User
+ * View course
+ */
+router.use("/courses/:id", middleware.courseAccessMiddleware, (req, res, next) => {
+  console.log("Time: ", Date.now());
+  next();
+});
+
+router.get("/courses/:id/index", tpmController.viewCourseIndex);
 
 // router.get("/data", tpmController.generateData);
 // router.get("/view/course/:id", tpmController.viewCourse);

@@ -117,6 +117,12 @@ const inputLicenseCode = () => {
     dataType: "json",
     data: { code: licenseCode }
   }).done((data) => {
+    if (data.code) {
+      if (data.code == 100) {
+        // error
+        alert(data.msg);
+      }
+    }
     location.reload();
   }).fail((data) => {
     // location.reload();
