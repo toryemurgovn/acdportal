@@ -7,7 +7,7 @@
     "start": "npm run serve",
     "serve": "node dist/server.js",
     "build": "npm run build-sass && npm run build-ts && npm run tslint && npm run copy-static-assets",
-    "test": "jest --forceExit --coverage --verbose",
+    "test": "jest --forceExit --detectOpenHandles --coverage --verbose",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "build-sass": "node-sass src/assets/css/main.scss dist/assets/css/main.css",
@@ -87,5 +87,19 @@
     "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
