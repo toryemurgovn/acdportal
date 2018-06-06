@@ -33,3 +33,8 @@ Check status migration
 ```
 migrate-mongo status
 ```
+
+Create migration
+```
+migrate-mongo create <file_name>
+```

@@ -17,7 +17,7 @@ import * as middleware from "./routes/middleware";
 const MongoStore = mongo(session);
 
 // Load environment variables from .env file, where API keys and passwords are configured
-dotenv.config({ path: ".env" });
+dotenv.config();
 
 // API keys and Passport configuration
 require("./config/passport");

@@ -36,11 +36,11 @@ router.get("/dashboard/courses", dashboardController.courses);
 router.get("/dashboard/packages", dashboardController.packages);
 router.get("/dashboard/packages/:id", dashboardController.packageDetail);
 
-router.get("/blockchain101/assignment/transaction", assignmentController.transaction);
-router.post("/blockchain101/assignment/transaction/:id", assignmentController.transactionMechanisms);
-router.get("/blockchain101/assignment/block", assignmentController.block);
-router.get("/blockchain101/assignment/quiz", assignmentController.quiz);
-router.post("/blockchain101/assignment/quiz", assignmentController.submitQuizzes);
+router.get("/courses/:id/assignment/transaction", assignmentController.transaction);
+router.post("/courses/:id/assignment/transaction/:id", assignmentController.transactionMechanisms);
+router.get("/courses/:id/assignment/block", assignmentController.block);
+router.get("/courses/:id/assignment/quiz", assignmentController.quiz);
+router.post("/courses/:id/assignment/quiz", assignmentController.submitQuizzes);
 
 /**
  * As User

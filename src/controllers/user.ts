@@ -20,7 +20,7 @@ export let postSignIn = (req: Request, res: Response, next: NextFunction) => {
   req.assert("password", "Password cannot be blank").notEmpty();
   req.sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
-  const errors = <any> req.validationErrors();
+  const errors = <any>req.validationErrors();
 
   if (errors) {
     req.flash("errors", errors);
@@ -29,12 +29,12 @@ export let postSignIn = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate("local", (err: Error, user: UserModel, info: IVerifyOptions) => {
     if (err) { return next(err); }
     if (!user) {
-      req.flash("errors", <any> { msg: info.message });
+      req.flash("errors", <any>{ msg: info.message });
       return res.redirect("/sign-in");
     }
     req.logIn(user, (err) => {
       if (err) { return next(err); }
-      req.flash("success", <any> { msg: "Success! You are logged in." });
+      req.flash("success", <any>{ msg: "Success! You are logged in." });
       res.redirect(req.session.returnTo || "/dashboard");
     });
   })(req, res, next);
@@ -60,12 +60,12 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
   req.assert("confirmPassword", "Passwords do not match").equals(req.body.password);
   req.sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
-  const errors = <any> req.validationErrors();
+  const errors = <any>req.validationErrors();
   if (errors) {
     req.flash("errors", errors);
     return res.redirect("/sign-up");
   }
-  const user = <any> new User({
+  const user = <any>new User({
     email: req.body.email,
     password: req.body.password
   });
@@ -73,7 +73,7 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (err) { next(err); }
     if (existingUser) {
-      req.flash("errors", <any>  { msg: "Account with that email address already exists." });
+      req.flash("errors", <any>{ msg: "Account with that email address already exists." });
       return res.redirect("/sign-up");
     }
     user.save((err, objUser) => {
