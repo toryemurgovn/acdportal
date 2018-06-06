@@ -13,7 +13,7 @@ export const applyCode = (req: Request, res: Response) => {
     console.log(" UserID " + req.user._id + "  apply code: " + code);
     Code.findById(code, (err, codeInfo: any) => {
       if (err) {
-        return res.json({code: 100, msg: "This Code doesn't exist"});
+        return res.json({ code: 100, msg: "This Code doesn't exist" });
       }
       if (codeInfo) {
         const isExistCode = codeInfo.user_email && codeInfo.user_email !== req.user.email;
@@ -40,9 +40,9 @@ export const applyCode = (req: Request, res: Response) => {
 };
 
 export const requestPackage = (req: Request, res: Response) => {
-  Package.find({status: false}, (err, reqPackages) => {
+  Package.find({ status: false }, (err, reqPackages) => {
     res.render("dashboard/admin/request-package", {
       reqPackages: reqPackages
     });
   });
-}
+};

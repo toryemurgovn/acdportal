@@ -79,7 +79,7 @@ router.route("/api/packages")
 router.route("/api/packages/:id")
   .get(packagesController.show);
 
-router.use("/dashboard/admin/*",(req, res, next) => {
+router.use("/dashboard/admin/*", (req, res, next) => {
   if (req.user) {
     if (req.user.role !== "admin") {
       res.redirect("/dashoard/");
@@ -92,7 +92,7 @@ router.use("/dashboard/admin/*",(req, res, next) => {
 
 router.get("/dashboard/admin/packages-request", tpmController.requestPackage);
 
-router.use("/api/admin/*",(req, res, next) => {
+router.use("/api/admin/*", (req, res, next) => {
   if (req.user) {
     if (req.user.role !== "admin") {
       res.status(403).send("Permission denied");

@@ -7,7 +7,7 @@ import { default as Code, CodeModel } from "../models/Code";
  */
 export let index = (req: Request, res: Response) => {
   const partner = req.user;
-  Package.find({status: 1,, partner_id: partner.id}, (err, listPackage) => {
+  Package.find({status: 1, partner_id: partner.id}, (err, listPackage) => {
     res.render("partner/gencode", {
       title: "Welcome",
       partner: partner,

@@ -8,7 +8,7 @@ export let index = (req: Request, res: Response) => {
     return res.json({ message: "Please sign in.", errorCode: 401 });
   }
   const partner = req.user;
-  Package.find({status: 1,, partner_id: partner.id }, (err, listPackage) => {
+  Package.find({status: 1, partner_id: partner.id }, (err, listPackage) => {
     res.json(listPackage);
   });
 };
