@@ -38,6 +38,8 @@ describe("Dashboard", () => {
   });
 
   describe("GET /dashboard/packages", () => {
+    console.log("Session cookie:");
+    console.log(loginCookie);
     it("should return 200", (done) => {
       request(app).get("/dashboard/packages")
         .set("cookie", loginCookie)
@@ -49,6 +51,8 @@ describe("Dashboard", () => {
   });
 
   describe("GET /dashboard/profile", () => {
+    console.log("Session cookie:");
+    console.log(loginCookie);
     it("should return 200", (done) => {
       request(app).get("/dashboard/profile")
         .set("cookie", loginCookie)
@@ -60,6 +64,8 @@ describe("Dashboard", () => {
   });
 
   describe("GET /dashboard/courses", () => {
+    console.log("Session cookie:");
+    console.log(loginCookie);
     it("should return 200", (done) => {
       request(app).get("/dashboard/courses")
         .set("cookie", loginCookie)
