@@ -1,0 +1,25 @@
+extends ../../dashboard-layout
+
+block content
+  table.table
+    thead
+      tr
+        th(scope='col') #
+        th(scope='col') Partner_id  - Name
+        th(scope='col') Course
+        th(scope='col') Quantity
+        th(scope='col') Status
+        th(scope='col') Created at
+        th(scope='col') 
+    tbody
+      each package, index in reqPackages
+        tr
+          th(scope='row') #{index + 1}
+          td= package.partner_id
+          td= package.course.name
+          td= package.quantity
+          td= package.status
+          td= moment(package.createdAt).format('MMM DD YYYY') 
+          td 
+            a.btn.btn-outline-primary.btn-sm.jRequestPackage(href='/api/admin/package-status', data-id= package.id, data-action="approve") Approve
+            a.btn.btn-outline-primary.btn-sm.jRequestPackage(href='/api/admin/package-status', data-id= package.id) Disapprove

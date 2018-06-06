@@ -3,11 +3,11 @@ import { default as Course, CourseModel } from "../models/Course";
 import { default as Code, CodeModel } from "../models/Code";
 import { default as Package, PackageModel } from "../models/Package";
 
-export let viewCourseIndex = (req: Request, res: Response) => {
-  res.redirect("/blockchain101/assignment/quiz");
+export const viewCourseIndex = (req: Request, res: Response) => {
+  res.redirect("/dashboard/courses");
 };
 
-export let applyCode = (req: Request, res: Response) => {
+export const applyCode = (req: Request, res: Response) => {
   if (req.user && req.user.role === "user") {
     const code = req.body.code;
     console.log(" UserID " + req.user._id + "  apply code: " + code);
@@ -38,3 +38,11 @@ export let applyCode = (req: Request, res: Response) => {
     return res.json({ message: "Can not apply", errorCode: 422 });
   }
 };
+
+export const requestPackage = (req: Request, res: Response) => {
+  Package.find({status: false}, (err, reqPackages) => {
+    res.render("dashboard/admin/request-package", {
+      reqPackages: reqPackages
+    });
+  });
+}

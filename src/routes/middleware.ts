@@ -9,10 +9,10 @@ export let courseAccessMiddleware = async (req: Request, res: Response, next: Ne
   if (!req.user) {
     return res.redirect("/sign-in");
   }
-  console.log("MiddleWare ne ------------------");
   capabilities(req.user).then((caps) => {
     res.locals.userCapabilities = caps;
   });
+
   // res.locals.userCapabilities = await capabilities(req.user);
   next();
 };

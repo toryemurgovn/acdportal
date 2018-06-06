@@ -10,15 +10,10 @@ import * as configPassport from "../config/passport";
 import * as partnerController from "../controllers/partner";
 import * as packagesController from "../controllers/packages";
 import * as tpmController from "../controllers/tpm";
+import * as apiAdminController from "../controllers/api/admin";
+
 import * as middleware from "./middleware";
 const router = Router();
-
-// middleware that is specific to this router
-router.use("/*", (req, res, next) => {
-  console.log("frontend middleware");
-  console.log("Time: ", Date.now());
-  next();
-});
 
 /**
  * App routers handle
@@ -83,5 +78,31 @@ router.route("/api/packages")
 
 router.route("/api/packages/:id")
   .get(packagesController.show);
+
+router.use("/dashboard/admin/*",(req, res, next) => {
+  if (req.user) {
+    if (req.user.role !== "admin") {
+      res.redirect("/dashoard/");
+    }
+    next();
+  } else {
+    res.redirect("/sign-in");
+  }
+});
+
+router.get("/dashboard/admin/packages-request", tpmController.requestPackage);
+
+router.use("/api/admin/*",(req, res, next) => {
+  if (req.user) {
+    if (req.user.role !== "admin") {
+      res.status(403).send("Permission denied");
+    }
+    next();
+  } else {
+    res.status(403).send("Permission denied");
+  }
+});
+
+router.post("/api/admin/package-status", apiAdminController.packageStatus);
 
 module.exports = router;

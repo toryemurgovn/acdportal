@@ -32,7 +32,7 @@ export let courses = (req: Request, res: Response) => {
         listCode.forEach((item: any) => {
           packages.push(item.package_id);
         });
-        Package.find({_id: packages}, (err, db_packages) => {
+        Package.find({status: 1,,_id: packages}, (err, db_packages) => {
           packages = <any> {};
           db_packages.forEach((item) => {
             packages[item._id] = item;
@@ -55,7 +55,7 @@ export let packages = (req: Request, res: Response) => {
   }
   const partner = req.user;
   Course.find({}, function (err, courses) {
-    Package.find({ partner_id: partner.id }, (err, listPackage) => {
+    Package.find({status: 1,, partner_id: partner.id }, (err, listPackage) => {
       res.render("dashboard/packages", {
         partner: partner,
         listPackage: listPackage,
