@@ -21,5 +21,7 @@ const codeSchema = new mongoose.Schema({
   status: { type: Boolean, default: true } // true = available to use
 }, { timestamps: true });
 
+// codeSchema.index({user_email: 1, package_id: 1}, {unique: true});
+
 const Code = mongoose.model("Code", codeSchema);
 export default Code;
