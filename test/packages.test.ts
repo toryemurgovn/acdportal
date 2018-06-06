@@ -14,7 +14,7 @@ describe("GET /dashboard/packages", () => {
 });
 
 describe("Dashboard", () => {
-  let loginCookie = "";
+  let loginCookie = "(no login)";
   beforeAll((done) => {
     const user = new User({ email: "user@me.com", password: "password" });
     user.save(() => {
@@ -26,6 +26,9 @@ describe("Dashboard", () => {
             throw error;
           }
           loginCookie = response.header["set-cookie"];
+          console.log("Get session cookie:");
+          console.log(loginCookie);
+          console.log(response.headers["set-cookie"]);
           done();
         });
     });
