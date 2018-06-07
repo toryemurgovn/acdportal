@@ -123,7 +123,7 @@ const genCode = async (email: string, data: any) => {
         code.status = false;
         if (!objUser.capabilities["courses"]) objUser.capabilities["courses"] = {};
         objUser.capabilities["courses"][data.course_id] = data.course;
-        objUser.save((err) => {});
+        User.update({_id: objUser._id}, {capabilities: objUser.capabilities}).exec();
       } else {
         sendInvitation(email);
       }
