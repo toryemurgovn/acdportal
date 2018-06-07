@@ -34,7 +34,7 @@ export let packages = (req: Request, res: Response) => {
   }
   const partner = req.user;
   Course.find({}, function (err, courses) {
-    Package.find({ status: 1, partner_id: partner.id }, (err, listPackage) => {
+    Package.find({ partner_id: partner.id }).sort({status: "asc"}).exec((err, listPackage) => {
       res.render("dashboard/packages", {
         partner: partner,
         listPackage: listPackage,
@@ -49,14 +49,24 @@ export let packageDetail = (req: Request, res: Response, next: NextFunction) => 
     return res.redirect("/sign-in");
   }
   const package_id = req.params.id;
-  Package.findOne({ _id: package_id }, (err, packageData) => {
-    if (err) { console.log(err); return next(err); }
-    const pId = packageData["id"];
-    Code.find({ package_id: pId }).exec((err, codes) => {
-      res.render("dashboard/package-detail", {
-        codes: codes,
-        package: packageData,
-      });
-    });
+  Package.findOne({_id: package_id }, (err, packageData: any) => {
+    if (err) { 
+      req.flash("errors", <any>{ msg: "The package is invalid!" });
+      return res.redirect(req.session.returnTo || "/dashboard/packages");
+    }
+    if (packageData) {
+      if (packageData.status != 1) {
+        req.flash("errors", <any>{ msg: "The package is invalid!" });
+        return res.redirect(req.session.returnTo || "/dashboard/packages");
+      } else {
+        const pId = packageData["id"];
+        Code.find({ package_id: pId }).exec((err, codes) => {
+          res.render("dashboard/package-detail", {
+            codes: codes,
+            package: packageData,
+          });
+        });
+      }
+    }
   });
 };
