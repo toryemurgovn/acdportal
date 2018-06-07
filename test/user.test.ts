@@ -58,30 +58,30 @@ describe("User", () => {
     });
   });
 
-  describe("POST /sign-up", () => {
-    it("should return 200", (done) => {
-      request(app).post("/sign-up")
-        .set("accept", "json")
-        .send({ email: "user@me.com", password: "password", confirmPassword: "password" })
-        .end(function (error, response) {
-          expect(response.status).toBe(302);
-          expect(response.header.location).toBe("/");
-          done();
-        })
-        ;
-    });
-  });
+  // describe("POST /sign-up", () => {
+  //   it("should return to home page", (done) => {
+  //     request(app).post("/sign-up")
+  //       .set("accept", "json")
+  //       .send({ email: "user@me.com", password: "password", confirmPassword: "password" })
+  //       .end(function (error, response) {
+  //         expect(response.status).toBe(302);
+  //         expect(response.header.location).toBe("/");
+  //         done();
+  //       })
+  //       ;
+  //   });
+  // });
 
-  describe("POST /sign-in", () => {
-    it("should return error message with invalid account", (done) => {
-      request(app).post("/sign-in")
-        .set("accept", "json")
-        .send({ email: "user@me.com", password: "password" })
-        .end(function (error, response) {
-          expect(response.status).toBe(302);
-          expect(response.header.location).toBe("/dashboard");
-          done();
-        });
-    });
-  });
+  // describe("POST /sign-in", () => {
+  //   it("should redirect to dashboard", (done) => {
+  //     request(app).post("/sign-in")
+  //       .set("accept", "json")
+  //       .send({ email: "user@me.com", password: "password" })
+  //       .end(function (error, response) {
+  //         expect(response.status).toBe(302);
+  //         expect(response.header.location).toBe("/dashboard");
+  //         done();
+  //       });
+  //   });
+  // });
 });
