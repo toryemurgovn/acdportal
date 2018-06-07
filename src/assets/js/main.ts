@@ -45,7 +45,7 @@ $(document).ready(() => {
     if (isValid) nextStepWizard.removeAttr("disabled").trigger("click");
   });
 
-  $(".jRequestPackage").on("click", function(event) {
+  $(".jRequestPackage").on("click", function (event) {
     event.preventDefault();
     const data = {
       id: $(this).data("id"),
@@ -56,7 +56,7 @@ $(document).ready(() => {
       url: "/api/admin/package-status",
       method: "POST",
       dataType: "json",
-      data: {package: data}
+      data: { package: data }
     }).done((data) => {
       console.log(data);
       location.reload();
@@ -111,7 +111,7 @@ const generateLicenseCode = () => {
     return;
   }
   $.ajax({
-    url: `/pa/${packageId}/gen`,
+    url: `/api/packages/${packageId}/generate-code`,
     method: "POST",
     dataType: "json",
     data: { email: email }
@@ -121,6 +121,46 @@ const generateLicenseCode = () => {
     location.reload();
   });
 };
+
+const importListEmails = () => {
+  const packageId = $("#packageId").val();
+  if (!packageId) {
+    return;
+  }
+  const data = new FormData();
+  const inputFile: any = document.getElementById("inputFile");
+  if (inputFile.files[0]) {
+    data.append("file", inputFile.files[0]);
+  } else {
+    return;
+  }
+  $.ajax({
+    url: `/api/packages/${packageId}/import-list`,
+    method: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: data
+  }).done((data) => {
+    location.reload();
+  }).fail((data) => {
+    // location.reload();
+  });
+};
+
+(function () {
+  const inputFile: any = document.getElementById("inputFile");
+  inputFile.onchange = function () {
+    if (this.files[0]) {
+      console.log("Selected file: " + this.files[0].name);
+      this.placeholder = this.files[0].name;
+      $("label[for='inputFile']").text(this.files[0].name);
+    } else {
+      this.placeholder = "Choose file";
+      $("label[for='inputFile']").text("Choose file");
+    }
+  };
+})();
 
 const inputLicenseCode = () => {
   const licenseCode = $("#inputCode").val();
