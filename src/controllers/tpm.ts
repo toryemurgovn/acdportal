@@ -1,10 +1,28 @@
 import { Request, Response } from "express";
-import { default as Course, CourseModel } from "../models/Course";
-import { default as Code, CodeModel } from "../models/Code";
-import { default as Package, PackageModel } from "../models/Package";
+import Course from "../models/Course";
+import Code from "../models/Code";
+import Package from "../models/Package";
 
 export const viewCourseIndex = (req: Request, res: Response) => {
-  res.redirect("/dashboard/courses");
+  const codeId = req.params.id;
+  Code.find({ id: codeId }, (err, code: any) => {
+    if (err || !code) {
+      req.flash("errors", <any>{ msg: "The code is invalid!" });
+      return res.redirect("/dashboard/courses");
+    }
+    Package.findOne({ id: code.package_id }, (err, packageModel: any) => {
+      if (err || !packageModel) {
+        req.flash("errors", <any>{ msg: "The package is invalid!" });
+        return res.redirect("/dashboard/courses");
+      }
+      console.log(packageModel);
+      console.log(packageModel.course);
+      res.render("assignment/index", {
+        package: packageModel,
+        course: packageModel.course
+      });
+    });
+  });
 };
 
 export const applyCode = (req: Request, res: Response) => {
