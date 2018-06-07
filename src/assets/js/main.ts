@@ -116,6 +116,7 @@ const generateLicenseCode = () => {
     dataType: "json",
     data: { email: email }
   }).done((data) => {
+    alert(data.message);
     location.reload();
   }).fail((data) => {
     location.reload();
