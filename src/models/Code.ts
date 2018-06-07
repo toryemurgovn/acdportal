@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import mongoose from "mongoose";
+import { default as User, UserModel } from "../models/User";
 
 const Schema = mongoose.Schema;
 
