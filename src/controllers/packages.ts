@@ -52,9 +52,7 @@ export let show = (req: Request, res: Response) => {
     }
     if (packageData) {
       const pId = packageData["id"];
-      // console.log(packageData);
       Code.find({ package_id: pId }).limit(10).exec((err, codes) => {
-        console.log(codes);
         res.json({
           id: packageData.id,
           codes: codes,
@@ -70,7 +68,6 @@ export let show = (req: Request, res: Response) => {
 };
 
 const createPackage = async (partner, params, courseData) => {
-  console.log("Create package for partner: " + partner.id);
   return new Package({
     partner_id: partner.id,
     quantity: params.quantity,

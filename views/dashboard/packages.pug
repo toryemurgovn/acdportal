@@ -11,20 +11,22 @@ block content
         th(scope='col') Course
         //- th(scope='col') Expired in
         th(scope='col') Quantity
-        th(scope='col') Available
+        th(scope='col') Status
         th(scope='col') Created at
         th(scope='col') 
     tbody
+      - const status = { 0: "Pendding", 1: "Approved", 2: "Disapproved"}
       each package, index in listPackage
         tr
           th(scope='row') #{index + 1}
           td= package.course.name
           //- td 6 Months
           td #{package.quantity}
-          td #{package.status}
+          td= status[package.status]
           td= moment(package.createdAt).format('MMM DD YYYY') 
-          td 
-            a.btn.btn-outline-primary.btn-sm(href='/dashboard/packages/' + package.id) View
+          td
+            if package.status === 1
+              a.btn.btn-outline-primary.btn-sm(href='/dashboard/packages/' + package.id) View
 
   #registerPackageModel.modal.fade(tabindex='-1', role='dialog', aria-labelledby='registerPackageModel', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
@@ -40,14 +42,6 @@ block content
               option(disabled, selected) -- select an option --            
               each course in courses
                 option(value=course.id)=course.name
-          //- .form-group
-          //-   label(for='inputTime') Expired in
-          //-   select#inputTime.form-control
-          //-     option(disabled, selected) -- select an option --
-          //-     option 1 month
-          //-     option 3 months
-          //-     option 6 months
-          //-     option 1 year
           .form-group
             label(for='inputQuantity') Quantity
             input#inputQuantity.form-control(type='number', placeholder='Quantity')
