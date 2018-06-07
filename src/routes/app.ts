@@ -15,6 +15,10 @@ import * as apiAdminController from "../controllers/api/admin";
 import * as middleware from "./middleware";
 const router = Router();
 
+import multer from "multer";
+const UPLOAD_PATH = "uploads";
+const upload = multer({ dest: `${UPLOAD_PATH}/` }); // multer configuration
+
 /**
  * App routers handle
  */
@@ -61,7 +65,7 @@ router.get("/free-course", (req, res) => {
   res.send("free course page");
 });
 
-router.use("/pa/*", configPassport.isPartner, (req, res, next) => {
+router.use("/api/packages/*", configPassport.isPartner, (req, res, next) => {
   console.log("Partner middleware");
   console.log("Time: ", Date.now());
   next();
@@ -70,7 +74,8 @@ router.use("/pa/*", configPassport.isPartner, (req, res, next) => {
 router.get("/sign-up-partner", partnerController.application);
 router.post("/sign-up-partner", partnerController.postApplication);
 
-router.post("/pa/:id/gen", partnerController.generateCodePackage);
+router.post("/api/packages/:id/generate-code", packagesController.generateCodePackage);
+router.post("/api/packages/:id/import-list", upload.single("file"), packagesController.importList);
 
 router.route("/api/packages")
   .post(packagesController.create)

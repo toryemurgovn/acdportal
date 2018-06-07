@@ -19,3 +19,7 @@ node_modules
 
 # Coverage reports
 coverage
+.vscode
+
+# uploads folder
+uploads

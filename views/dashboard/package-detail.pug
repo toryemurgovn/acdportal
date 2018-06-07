@@ -5,6 +5,8 @@ block content
     form(action="/pa/" + package._id + "/gen" method="post")
       a.btn.btn-outline-primary(href='/dashboard/packages')
         | Back to list
+      button.ml-3.btn.btn-primary(type='button', data-toggle="modal", data-target="#importListEmails")
+        | Import list emails
       if package.status
         button.ml-3.btn.btn-success(type='button', data-toggle="modal", data-target="#generateCodeModal") Generate new code
       end
@@ -43,3 +45,19 @@ block content
         .modal-footer
           button.btn.btn-light(type='button', data-dismiss='modal') Cancel
           button.btn.btn-primary(type='button', onclick="generateLicenseCode()") Submit
+  #importListEmails.modal.fade(tabindex='-1', role='dialog', aria-labelledby='importListEmails', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Upload file CSV
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          .form-group
+            .input-group
+              .custom-file
+                input#inputFile.custom-file-input(type='file')
+                label.custom-file-label(for='inputFile') Choose file
+        .modal-footer
+          button.btn.btn-light(type='button', data-dismiss='modal') Cancel
+          button.btn.btn-primary(type='button', onclick="importListEmails()") Submit
