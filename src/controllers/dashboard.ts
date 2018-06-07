@@ -25,28 +25,7 @@ export let courses = (req: Request, res: Response) => {
   if (!req.user) {
     return res.redirect("/sign-in");
   }
-  if (req.user.role === "user") {
-    Code.find({ user_id: req.user._id }, (err, listCode) => {
-      let packages = [];
-      if (listCode) {
-        listCode.forEach((item: any) => {
-          packages.push(item.package_id);
-        });
-        Package.find({ status: 1, _id: packages }, (err, db_packages) => {
-          packages = <any>{};
-          db_packages.forEach((item) => {
-            packages[item._id] = item;
-          });
-          res.render("dashboard/courses", {
-            courses: listCode,
-            packages: packages
-          });
-        });
-      }
-    });
-  } else {
-    res.render("dashboard/courses");
-  }
+  res.render("dashboard/courses");
 };
 
 export let packages = (req: Request, res: Response) => {
@@ -74,7 +53,6 @@ export let packageDetail = (req: Request, res: Response, next: NextFunction) => 
     if (err) { console.log(err); return next(err); }
     const pId = packageData["id"];
     Code.find({ package_id: pId }).exec((err, codes) => {
-      // console.log(codes);
       res.render("dashboard/package-detail", {
         codes: codes,
         package: packageData,

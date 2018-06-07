@@ -15,8 +15,6 @@ export const viewCourseIndex = (req: Request, res: Response) => {
         req.flash("errors", <any>{ msg: "The package is invalid!" });
         return res.redirect("/dashboard/courses");
       }
-      console.log(packageModel);
-      console.log(packageModel.course);
       res.render("assignment/index", {
         package: packageModel,
         course: packageModel.course
