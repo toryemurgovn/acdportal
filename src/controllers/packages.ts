@@ -78,7 +78,6 @@ const createPackage = async (partner, params, courseData) => {
   });
 };
 
-
 export let generateCodePackage = (req: Request, res: Response, next: NextFunction) => {
   const package_id = req.params.id;
   Package.findOne({ _id: package_id }, (err, packageData: any) => {
@@ -98,7 +97,7 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
                 if (err) {
                   return res.json({ message: err.message.toString(), errorCode: 422 });
                 }
-                return res.json({ docs });
+                return res.json({ message: "Success" });
               });
             }
           });

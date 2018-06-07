@@ -58,7 +58,7 @@ router.get("/courses/:id", tpmController.viewCourseIndex);
  */
 
 
-router.post("/apply-code", tpmController.applyCode);
+router.post("/apply-code", userController.applyCode);
 
 router.get("/free-course", (req, res) => {
   res.send("free course page");

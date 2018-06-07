@@ -2,6 +2,7 @@ import passport from "passport";
 import { Request, Response, NextFunction } from "express";
 import { default as User, UserModel } from "../models/User";
 import { default as Code, CodeModel } from "../models/Code";
+import { default as Package, PackageModel } from "../models/Package";
 import { IVerifyOptions } from "passport-local";
 import { WriteError } from "mongodb";
 
@@ -86,4 +87,41 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
       });
     });
   });
+};
+
+export const applyCode = (req: Request, res: Response) => {
+  if (req.user && req.user.role === "user") {
+    const code = req.body.code;
+    console.log(" UserID " + req.user._id + "  apply code: " + code);
+    Code.findById(code, (err, codeInfo: any) => {
+      if (err) {
+        return res.json({ code: 100, msg: "This Code doesn't exist" });
+      }
+      if (codeInfo) {
+        const isExistCode = codeInfo.user_email && codeInfo.user_email !== req.user.email;
+        if (codeInfo.status == false || codeInfo.user_id || isExistCode) {
+          return res.json({ msg: "Your code has been used", code: 100 });
+        }
+
+        codeInfo.user_id = req.user._id;
+        codeInfo.user_email = req.user.email;
+        codeInfo.inputed_at = new Date();
+        codeInfo.status = false;
+        codeInfo.save(function (err) {
+          if (err) {
+            return res.json({ msg: err.message.toString(), code: 100 });
+          }
+          Package.findOne({ _id: codeInfo.package_id }, (err, packageData: any) => {
+            if (!req.user.capabilities["courses"]) req.user.capabilities["courses"] = {};
+            req.user.capabilities["courses"][packageData.course_id] = packageData.course;
+            User.update({_id: req.user._id}, {capabilities: req.user.capabilities}).exec();
+          });
+          return res.json({ msg: "Code successfully updated!", code: 200 });
+        });
+      }
+    });
+
+  } else {
+    return res.json({ message: "Can not apply", code: 422 });
+  }
 };
