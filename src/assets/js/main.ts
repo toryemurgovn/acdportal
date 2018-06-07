@@ -150,6 +150,9 @@ const importListEmails = () => {
 
 (function () {
   const inputFile: any = document.getElementById("inputFile");
+  if (!inputFile) {
+    return;
+  }
   inputFile.onchange = function () {
     if (this.files[0]) {
       console.log("Selected file: " + this.files[0].name);
