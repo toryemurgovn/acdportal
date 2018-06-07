@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import Package from "../models/Package";
 import Code from "../models/Code";
 import Course from "../models/Course";
@@ -81,11 +81,12 @@ const createPackage = async (partner, params, courseData) => {
   });
 };
 
-export let generateCodePackage = (req: Request, res: Response) => {
+
+export let generateCodePackage = (req: Request, res: Response, next: NextFunction) => {
   const package_id = req.params.id;
   Package.findOne({ _id: package_id }, (err, packageData) => {
     if (err) {
-      return res.json({ message: err.message, code: 422 });
+      return res.json({ message: err.message, errorCode: 422 });
     }
     if (packageData) {
       genCode((req.body.email || ""), packageData).then((codeData) => {
@@ -93,33 +94,36 @@ export let generateCodePackage = (req: Request, res: Response) => {
           const codeObj = new Code(codeData);
           codeObj.save((err, docs) => {
             if (err) {
-              return res.json({ message: err.message.toString(), code: 422 });
+              return res.json({ message: err.message.toString(), errorCode: 422 });
             }
             return res.json({ docs });
           });
         }
       });
     } else {
-      return res.json({ message: "Package does not exist.", code: 422 });
+      return res.json({ message: "Package does not exist.", errorCode: 422 });
     }
   });
 };
 
 const genCode = async (email: string, data: any) => {
   const code = {
-    package_id: data._id,
-    user_id: "",
-    partner_id: data.partner_id,
-    user_email: email,
-    status: true
-  };
+      package_id: data._id,
+      user_id: "",
+      partner_id: data.partner_id,
+      user_email: email,
+      status: true
+    };
   if (email) {
-    await User.findOne({ email: email }, (err, objUser: any) => {
+    await User.findOne({email: email}, (err, objUser: any) => {
       if (err) { return code; }
       if (objUser) {
         code.user_id = objUser._id;
         code["inputed_at"] = new Date();
         code.status = false;
+        if (!objUser.capabilities["courses"]) objUser.capabilities["courses"] = {};
+        objUser.capabilities["courses"][data.course_id] = data.course;
+        objUser.save((err) => {});
       } else {
         sendInvitation(email);
       }
