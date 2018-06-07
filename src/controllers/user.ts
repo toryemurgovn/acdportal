@@ -82,22 +82,8 @@ export let postSignUp = (req: Request, res: Response, next: NextFunction) => {
         if (err) {
           next(err);
         }
-        acceptCoursebyEmail(user).then(() => {});
         return res.redirect("/");
       });
     });
-  });
-};
-
-const acceptCoursebyEmail = async (user) => {
-  const updateInfo = {
-    user_id: user._id,
-    status: false,
-    inputed_at: new Date()
-  };
-  await Code.update({user_email: user.email}, updateInfo, {multi: true}, (err, res) => {
-    if (err) {
-      console.log("log: error for update user Code");
-    }
   });
 };

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-
 import User from "../models/User";
+import Package from "../models/Package";
+import Code from "../models/Code";
 
 export let application = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
@@ -42,4 +43,59 @@ export let postApplication = (req: Request, res: Response, next: NextFunction) =
       });
     });
   });
+};
+
+export let generateCodePackage = (req: Request, res: Response, next: NextFunction) => {
+  const package_id = req.params.id;
+  Package.findOne({ _id: package_id }, (err, packageData) => {
+    if (err) {
+      return res.json({ message: err.message, errorCode: 422 });
+    }
+    if (packageData) {
+      genCode((req.body.email || ""), packageData).then((codeData) => {
+        if (codeData) {
+          const codeObj = new Code(codeData);
+          codeObj.save((err, docs) => {
+            if (err) {
+              return res.json({ message: err.message.toString(), errorCode: 422 });
+            }
+            return res.json({ docs });
+          });
+        }
+      });
+    } else {
+      return res.json({ message: "Package does not exist.", errorCode: 422 });
+    }
+  });
+};
+
+const genCode = async (email: string, data: any) => {
+  const code = {
+      package_id: data._id,
+      user_id: "",
+      partner_id: data.partner_id,
+      user_email: email,
+      status: true
+    };
+  if (email) {
+    await User.findOne({email: email}, (err, objUser: any) => {
+      if (err) { return code; }
+      if (objUser) {
+        code.user_id = objUser._id;
+        code["inputed_at"] = new Date();
+        code.status = false;
+        if (!objUser.capabilities["courses"]) objUser.capabilities["courses"] = {};
+        objUser.capabilities["courses"][data.course_id] = data.course;
+        objUser.save((err) => {});
+      } else {
+        sendInvitation(email);
+      }
+    });
+  }
+  return code;
+};
+
+const sendInvitation = (email) => {
+  // send email to user
+  console.log("Sending ... email to user");
 };
