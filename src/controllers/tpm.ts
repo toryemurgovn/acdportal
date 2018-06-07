@@ -35,7 +35,7 @@ export const applyCode = (req: Request, res: Response) => {
     });
 
   } else {
-    return res.json({ message: "Can not apply", errorCode: 422 });
+    return res.json({ message: "Can not apply", code: 422 });
   }
 };
 
