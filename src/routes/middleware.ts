@@ -24,4 +24,4 @@ const logicUserCanAccess = (user, course_id = "#") => {
     }
   }
   return true;
-} 
+};

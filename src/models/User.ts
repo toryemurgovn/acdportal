@@ -39,7 +39,7 @@ userSchema.pre("save", function save(next) {
           .exec((err, packages) => {
             if (packages) {
               const packages_id = [];
-              packages.forEach((item: any) => {packages_id.push(item.package_id);});
+              packages.forEach((item: any) => { packages_id.push(item.package_id); });
               Package.find({_id: packages_id}).select("course").exec((err, dataPackages) => {
                 const data = {};
                 for (let i = 0; i < dataPackages.length; i++ ) {
@@ -77,7 +77,7 @@ export default User;
  * Utils functions
  */
 
-let updateCodes = (user) => {
+const updateCodes = (user) => {
   const updateInfo = {
     user_id: user._id,
     status: false,
