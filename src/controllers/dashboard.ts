@@ -50,7 +50,7 @@ export let packageDetail = (req: Request, res: Response, next: NextFunction) => 
   }
   const package_id = req.params.id;
   Package.findOne({_id: package_id }, (err, packageData: any) => {
-    if (err) { 
+    if (err) {
       req.flash("errors", <any>{ msg: "The package is invalid!" });
       return res.redirect(req.session.returnTo || "/dashboard/packages");
     }
