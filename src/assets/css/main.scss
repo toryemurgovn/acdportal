@@ -1,5 +1,7 @@
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import "dashboard";
+@import "course";
+
 html {
   font-size: 14px;
 }
@@ -8,6 +10,11 @@ html {
   html {
     font-size: 16px;
   }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 .container {

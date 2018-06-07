@@ -45,6 +45,7 @@ router.post("/courses/:id/assignment/transaction/:id", assignmentController.tran
 router.get("/courses/:id/assignment/block", assignmentController.block);
 router.get("/courses/:id/assignment/quiz", assignmentController.quiz);
 router.post("/courses/:id/assignment/quiz", assignmentController.submitQuizzes);
+router.get("/courses/:id", tpmController.viewCourseIndex);
 
 /**
  * As User
@@ -55,10 +56,7 @@ router.use("/courses/:id", middleware.courseAccessMiddleware, (req, res, next) =
   next();
 });
 
-router.get("/courses/:id/index", tpmController.viewCourseIndex);
 
-// router.get("/data", tpmController.generateData);
-// router.get("/view/course/:id", tpmController.viewCourse);
 router.post("/apply-code", tpmController.applyCode);
 
 router.get("/free-course", (req, res) => {

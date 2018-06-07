@@ -1,0 +1,68 @@
+extends ../layout-course
+
+block content
+  section.banner-pages.banner-course
+    .flex-grid.align-center
+      .wpcol.wpcol-2
+        .wrap-img
+          img.img-course(src='/images/bitcoin-decentralized-technology-v1.jpg ', alt='Blockchain 101', title='Blockchain 101')
+
+      .wpcol.wpcol-2
+        h1.title.title-course= course.name
+        p
+          | Bitcoin and its blockchain technology promise to make sending money--and interacting in general--cheaper, easier, more secure, and programmable. In this course, you'll learn about Bitcoin and a broad range of other decentralized projects.
+  section.about
+    .flex-grid
+      .wpcol.wpcol-2
+        .about-content
+          h1.title About this course
+          .markdown
+            p
+              | In this course you'll learn all there is to know about Blockchain.
+            p
+              | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. 
+            p Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            p
+              | Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+      .wpcol.wpcol-2
+        .card-lesson-list.card-lesson-list-course
+          .wrap-top-lessons-list
+            h2.subtitle Assignment
+          h3.chapter-title Transaction Mechanisms
+          ul.lesson-list
+            li.lesson-item
+              span.lesson-item-check
+                .toggle-wrapper(data-v-ac76541a='')
+                  span.toggle-loading(data-v-ac76541a='')
+                    // 
+                  .toggle-placeholder(data-v-ac76541a='')
+              .lesson-item-details
+                a(href='/courses/' + package.course_id + '/assignment/transaction', title='Blockchain for Everyone')
+                  p.lesson-item-text
+                    | Get started
+          
+          h3.chapter-title Block Mechanisms
+          ul.lesson-list
+            li.lesson-item
+              span.lesson-item-check
+                .toggle-wrapper(data-v-ac76541a='')
+                  span.toggle-loading(data-v-ac76541a='')
+                    // 
+                  .toggle-placeholder(data-v-ac76541a='')
+              .lesson-item-details
+                a(href='/courses/' + package.course_id + '/assignment/block', title='Blockchain for Everyone')
+                  p.lesson-item-text
+                    | Try to understand
+           
+          h3.chapter-title Multiple-choice Quiz
+          ul.lesson-list
+            li.lesson-item
+              span.lesson-item-check
+                .toggle-wrapper(data-v-ac76541a='')
+                  span.toggle-loading(data-v-ac76541a='')
+                    // 
+                  .toggle-placeholder(data-v-ac76541a='')
+              .lesson-item-details
+                a(href='/courses/' + package.course_id + '/assignment/quiz', title='Blockchain for Everyone')
+                  p.lesson-item-text
+                    | Check yourself!
