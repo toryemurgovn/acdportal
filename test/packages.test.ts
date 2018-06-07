@@ -28,7 +28,6 @@ describe("Dashboard", () => {
           loginCookie = response.header["set-cookie"];
           console.log("Get session cookie:");
           console.log(loginCookie);
-          console.log(response.headers["set-cookie"]);
           done();
         });
     });
@@ -53,30 +52,30 @@ describe("Dashboard", () => {
     });
   });
 
-  describe("GET /dashboard/profile", () => {
-    console.log("Session cookie:");
-    console.log(loginCookie);
-    it("should return 200", (done) => {
-      request(app).get("/dashboard/profile")
-        .set("cookie", loginCookie)
-        .end((error, response) => {
-          expect(response.status).toBe(200);
-          done();
-        });
-    });
-  });
+  // describe("GET /dashboard/profile", () => {
+  //   console.log("Session cookie:");
+  //   console.log(loginCookie);
+  //   it("should return 200", (done) => {
+  //     request(app).get("/dashboard/profile")
+  //       .set("cookie", loginCookie)
+  //       .end((error, response) => {
+  //         expect(response.status).toBe(200);
+  //         done();
+  //       });
+  //   });
+  // });
 
-  describe("GET /dashboard/courses", () => {
-    console.log("Session cookie:");
-    console.log(loginCookie);
-    it("should return 200", (done) => {
-      request(app).get("/dashboard/courses")
-        .set("cookie", loginCookie)
-        .end((error, response) => {
-          expect(response.status).toBe(200);
-          done();
-        });
-    });
-  });
+  // describe("GET /dashboard/courses", () => {
+  //   console.log("Session cookie:");
+  //   console.log(loginCookie);
+  //   it("should return 200", (done) => {
+  //     request(app).get("/dashboard/courses")
+  //       .set("cookie", loginCookie)
+  //       .end((error, response) => {
+  //         expect(response.status).toBe(200);
+  //         done();
+  //       });
+  //   });
+  // });
 
 });
