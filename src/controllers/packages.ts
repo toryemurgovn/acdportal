@@ -28,13 +28,13 @@ export let create = (req: Request, res: Response) => {
         _package.save((error) => {
           console.log(error);
           if (error) {
-            return res.json({ message: error, code: 422 });
+            return res.status(422).json({ message: error, code: 422 });
           }
         });
         res.json(packageModel);
       });
     } else {
-      return res.json({ message: "Course does not exist.", code: 422 });
+      return res.status(422).json({ message: "Course does not exist.", code: 422 });
     }
   });
 };
@@ -48,7 +48,7 @@ export let show = (req: Request, res: Response) => {
   Package.findOne({ _id: package_id }, (error, packageData: any) => {
     if (error) {
       console.log(error);
-      return res.json({ message: error, code: 500 });
+      return res.status(500).json({ message: error, code: 500 });
     }
     if (packageData) {
       const pId = packageData["id"];
@@ -83,20 +83,19 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
   const package_id = req.params.id;
   Package.findOne({ _id: package_id }, (err, packageData: any) => {
     if (err) {
-      return res.json({ message: err.message, errorCode: 422 });
+      return res.status(422).json({ message: err.message, code: 422 });
     }
     if (packageData) {
       Code.count({package_id: packageData._id}, (err, exisCode) => {
-        if (err || exisCode > packageData.quantity) {
-          console.log("Exit");
-          return res.json({ message: "Your package license is over " + packageData.quantity, errorCode: 422 });
+        if (err || exisCode >= packageData.quantity) {
+          return res.status(422).json({ message: "Your package license is over " + packageData.quantity, code: 422 });
         } else {
           genCode((req.body.email || ""), packageData).then((codeData) => {
             if (codeData) {
               const codeObj = new Code(codeData);
               codeObj.save((err, docs) => {
                 if (err) {
-                  return res.json({ message: err.message.toString(), errorCode: 422 });
+                  return res.status(422).json({ message: err.message.toString(), code: 422 });
                 }
                 return res.json({ message: "Success" });
               });
@@ -105,7 +104,7 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
         }
       });
     } else {
-      return res.json({ message: "Package does not exist.", errorCode: 422 });
+      return res.status(422).json({ message: "Package does not exist.", code: 422 });
     }
   });
 };
@@ -145,7 +144,7 @@ export let importList = (req: Request, res: Response) => {
   const package_id = req.params.id;
   Package.findOne({ _id: package_id }, (err, packageData: any) => {
     if (err) {
-      return res.json({ message: err.message, code: 422 });
+      return res.status(422).json({ message: err.message, code: 422 });
     }
     if (packageData) {
       const source = fs.createReadStream(req.file.path);
@@ -171,7 +170,7 @@ export let importList = (req: Request, res: Response) => {
         Code.count({package_id: packageData._id}, (err, exisCode) => {
           if (err || (exisCode + size) > packageData.quantity) {
             console.log("Exit");
-            return res.json({ message: "List input account makes your package license will be over " + packageData.quantity, errorCode: 422 });
+            return res.status(422).json({ message: "List input account makes your package license will be over " + packageData.quantity, code: 422 });
           } else {
             let index = 1;
             output.forEach((email) => {
@@ -180,7 +179,7 @@ export let importList = (req: Request, res: Response) => {
                   const codeObj = new Code(codeData);
                   codeObj.save((err, docs) => {
                     if (err) {
-                      return res.json({ message: err.message.toString(), code: 422 });
+                      return res.status(422).json({ message: err.message.toString(), code: 422 });
                     }
                     index++;
                     if (index === size) {

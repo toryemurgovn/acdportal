@@ -115,14 +115,10 @@ const generateLicenseCode = () => {
     method: "POST",
     dataType: "json",
     data: { email: email }
-  }).done((data, text, xhr) => {
-    if (xhr.status !== 200) {
-      alert(data.message);
-    } else {
-      location.reload();
-    }
-  }).fail((data) => {
+  }).done((data) => {
     location.reload();
+  }).fail((data: any) => {
+    alert(data.responseJSON.message);
   });
 };
 
@@ -180,14 +176,9 @@ const inputLicenseCode = () => {
     dataType: "json",
     data: { code: licenseCode }
   }).done((data) => {
-    if (data.code) {
-      if (data.code == 100) {
-        // error
-        alert(data.msg);
-      }
-    }
     location.reload();
-  }).fail((data) => {
+  }).fail((data: any) => {
+    alert(data.responseJSON.message);
     // location.reload();
   });
 };
