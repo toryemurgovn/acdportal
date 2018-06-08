@@ -64,40 +64,59 @@ export let transactionMechanisms = (req: Request, res: Response) => {
   res.send(fn[fnTest](req.body));
 };
 
+const convertResult = (bufferData) => {
+  let stringData = bufferData.toString();
+  stringData = stringData.replace(/\r\n/g, "\r").replace(/\n/g, "\r").replace(/['"]+/g, "").split(/\r/);
+  while (!stringData[0]) {
+    stringData.shift();
+  }
+  // console.log(stringData);
+  return stringData;
+};
+
+
 const filePath = "./files";
 const fn = <any>{};
 
 fn.test1 = (data: any) => {
   const inputData = data.name + "\n" + data.amount + "\n";
   const file = filePath + "/test_1";
-  return execFileSync(file, [], {
+  let resData: any = execFileSync(file, [], {
     input: inputData
   });
+  resData = convertResult(resData);
+  return { name: resData[1], amount: resData[3], hash: resData[5] };
 };
 
 
 fn.test2 = (data: any) => {
   const inputData = data.passphrase + "\n";
   const file = filePath + "/test_2";
-  return execFileSync(file, [], {
+  let resData: any = execFileSync(file, [], {
     input: inputData
   });
+  resData = convertResult(resData);
+  return { privateKey: resData[1], publicKey: resData[3] };
 };
 
 fn.test3 = (data: any) => {
   const inputData = data.name + "\n" + data.amount + "\n" + data.prikey + "\n";
   const file = filePath + "/test_3";
-  return execFileSync(file, [], {
+  let resData: any = execFileSync(file, [], {
     input: inputData
   });
+  resData = convertResult(resData);
+  return { name: resData[1], amount: resData[3], hash: resData[5], signature: resData[9] };
 };
 
 fn.test4 = (data: any) => {
   const inputData = data.name + "\n" + data.amount + "\n" + data.pubkey + "\n" + data.sign + "\n";
   const file = filePath + "/test_4";
-  return execFileSync(file, [], {
+  let resData: any = execFileSync(file, [], {
     input: inputData
   });
+  resData = convertResult(resData);
+  return { name: resData[1], amount: resData[3], hash: resData[5], signature: resData[9], valid: resData[12] };
 };
 
 fn.test5 = (data: any) => {
