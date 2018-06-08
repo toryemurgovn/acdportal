@@ -79,7 +79,7 @@ const filePath = "./files";
 const fn = <any>{};
 
 fn.test1 = (data: any) => {
-  const inputData = data.name + "\n" + data.amount + "\n";
+  const inputData = data.name + "\n" + (data.amount || 0) + "\n";
   const file = filePath + "/test_1";
   let resData: any = execFileSync(file, [], {
     input: inputData
@@ -100,7 +100,7 @@ fn.test2 = (data: any) => {
 };
 
 fn.test3 = (data: any) => {
-  const inputData = data.name + "\n" + data.amount + "\n" + data.prikey + "\n";
+  const inputData = data.name + "\n" + (data.amount || 0) + "\n" + data.prikey + "\n";
   const file = filePath + "/test_3";
   let resData: any = execFileSync(file, [], {
     input: inputData
@@ -110,7 +110,7 @@ fn.test3 = (data: any) => {
 };
 
 fn.test4 = (data: any) => {
-  const inputData = data.name + "\n" + data.amount + "\n" + data.pubkey + "\n" + data.sign + "\n";
+  const inputData = data.name + "\n" + (data.amount || 0) + "\n" + data.pubkey + "\n" + data.sign + "\n";
   const file = filePath + "/test_4";
   let resData: any = execFileSync(file, [], {
     input: inputData
@@ -144,7 +144,7 @@ fn.test7 = (data: any) => {
 };
 
 fn.test8 = (data: any) => {
-  const inputData = data.name + "\n" + data.amount + "\n" + data.difficult + "\n";
+  const inputData = data.name + "\n" + (data.amount || 0) + "\n" + data.difficult + "\n";
   const file = filePath + "/test_8";
   return execFileSync(file, [], {
     input: inputData
@@ -154,7 +154,7 @@ fn.test8 = (data: any) => {
 fn.test9 = (data: any) => {
   let inputData = "";
   for (const i in data) {
-    inputData += data[i] + "\n ";
+    inputData += data[i] + "\n";
   }
   inputData += "\n \n " + "\n \n " + "\n \n  " + "\n \n";
   const file = filePath + "/test_9";
