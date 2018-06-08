@@ -52,9 +52,7 @@ export let show = (req: Request, res: Response) => {
     }
     if (packageData) {
       const pId = packageData["id"];
-      // console.log(packageData);
       Code.find({ package_id: pId }).limit(10).exec((err, codes) => {
-        console.log(codes);
         res.json({
           id: packageData.id,
           codes: codes,
@@ -70,7 +68,6 @@ export let show = (req: Request, res: Response) => {
 };
 
 const createPackage = async (partner, params, courseData) => {
-  console.log("Create package for partner: " + partner.id);
   return new Package({
     partner_id: partner.id,
     quantity: params.quantity,
@@ -81,22 +78,28 @@ const createPackage = async (partner, params, courseData) => {
   });
 };
 
-
 export let generateCodePackage = (req: Request, res: Response, next: NextFunction) => {
   const package_id = req.params.id;
-  Package.findOne({ _id: package_id }, (err, packageData) => {
+  Package.findOne({ _id: package_id }, (err, packageData: any) => {
     if (err) {
       return res.json({ message: err.message, errorCode: 422 });
     }
     if (packageData) {
-      genCode((req.body.email || ""), packageData).then((codeData) => {
-        if (codeData) {
-          const codeObj = new Code(codeData);
-          codeObj.save((err, docs) => {
-            if (err) {
-              return res.json({ message: err.message.toString(), errorCode: 422 });
+      Code.count({package_id: packageData._id}, (err, exisCode) => {
+        if (err || exisCode > packageData.quantity) {
+          console.log("Exit");
+          return res.json({ message: "Your package license is over " + packageData.quantity, errorCode: 422 });
+        } else {
+          genCode((req.body.email || ""), packageData).then((codeData) => {
+            if (codeData) {
+              const codeObj = new Code(codeData);
+              codeObj.save((err, docs) => {
+                if (err) {
+                  return res.json({ message: err.message.toString(), errorCode: 422 });
+                }
+                return res.json({ message: "Success" });
+              });
             }
-            return res.json({ docs });
           });
         }
       });
@@ -123,7 +126,7 @@ const genCode = async (email: string, data: any) => {
         code.status = false;
         if (!objUser.capabilities["courses"]) objUser.capabilities["courses"] = {};
         objUser.capabilities["courses"][data.course_id] = data.course;
-        objUser.save((err) => {});
+        User.update({_id: objUser._id}, {capabilities: objUser.capabilities}).exec();
       } else {
         sendInvitation(email);
       }
@@ -139,7 +142,7 @@ const sendInvitation = (email) => {
 
 export let importList = (req: Request, res: Response) => {
   const package_id = req.params.id;
-  Package.findOne({ _id: package_id }, (err, packageData) => {
+  Package.findOne({ _id: package_id }, (err, packageData: any) => {
     if (err) {
       return res.json({ message: err.message, code: 422 });
     }
@@ -164,22 +167,29 @@ export let importList = (req: Request, res: Response) => {
 
       const generateList = () => {
         const size = output.length;
-        let index = 1;
-        output.forEach((email) => {
-          genCode(email, packageData).then((codeData) => {
-            if (codeData) {
-              const codeObj = new Code(codeData);
-              codeObj.save((err, docs) => {
-                if (err) {
-                  return res.json({ message: err.message.toString(), code: 422 });
-                }
-                index++;
-                if (index === size) {
-                  res.json({ message: output, code: 200 });
+        Code.count({package_id: packageData._id}, (err, exisCode) => {
+          if (err || (exisCode + size) > packageData.quantity) {
+            console.log("Exit");
+            return res.json({ message: "List input account makes your package license will be over " + packageData.quantity, errorCode: 422 });
+          } else {
+            let index = 1;
+            output.forEach((email) => {
+              genCode(email, packageData).then((codeData) => {
+                if (codeData) {
+                  const codeObj = new Code(codeData);
+                  codeObj.save((err, docs) => {
+                    if (err) {
+                      return res.json({ message: err.message.toString(), code: 422 });
+                    }
+                    index++;
+                    if (index === size) {
+                      res.json({ message: output, code: 200 });
+                    }
+                  });
                 }
               });
-            }
-          });
+            });
+          }
         });
       };
 

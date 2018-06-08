@@ -12,13 +12,14 @@ block content
         th(scope='col') Created at
         th(scope='col') View
     tbody
-      each course in courses
+      - let index = 1;
+      each course in user.capabilities.courses || []
         tr
-          th(scope='row') 1
-          td= packages[course.package_id].course.name
+          th(scope='row')= index++
+          td= course.name
           td= moment(course.createdAt).format('MMM DD YYYY')
           td
-            a.btn.btn-outline-primary.btn-sm(href=`/courses/${packages[course.package_id].course._id}`) View
+            a.btn.btn-outline-primary.btn-sm(href=`/courses/${course._id}`) View
   #inputCodeToLearn.modal.fade(tabindex='-1', role='dialog', aria-labelledby='inputCodeToLearn', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
       .modal-content

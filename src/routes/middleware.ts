@@ -5,7 +5,7 @@ import { default as User, UserModel } from "../models/User";
 import { default as Course } from "../models/Course";
 
 
-export let courseAccessMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export let courseAccessMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
     return res.redirect("/sign-in");
   }
@@ -23,5 +23,5 @@ const logicUserCanAccess = (user, course_id = "#") => {
       return true;
     }
   }
-  return true;
+  return false;
 };

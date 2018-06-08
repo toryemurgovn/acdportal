@@ -27,6 +27,11 @@ router.get("/permission-denied", (req, res) => {
   res.redirect("/");
 });
 
+router.use("/courses/:id", middleware.courseAccessMiddleware, (req, res, next) => {
+  console.log("Time: ", Date.now());
+  next();
+});
+
 router.get("/", homeController.index);
 router.get("/sign-out", userController.getLogout);
 router.get("/sign-in", userController.signIn);
@@ -51,13 +56,9 @@ router.get("/courses/:id", tpmController.viewCourseIndex);
  * As User
  * View course
  */
-router.use("/courses/:id", middleware.courseAccessMiddleware, (req, res, next) => {
-  console.log("Time: ", Date.now());
-  next();
-});
 
 
-router.post("/apply-code", tpmController.applyCode);
+router.post("/apply-code", userController.applyCode);
 
 router.get("/free-course", (req, res) => {
   res.send("free course page");

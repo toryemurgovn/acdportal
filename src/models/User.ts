@@ -26,35 +26,40 @@ const userSchema = new mongoose.Schema({
  */
 userSchema.pre("save", function save(next) {
   const user = <any> this;
-  if (!user.isModified("password")) { return next(); }
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, undefined, (err: mongoose.Error, hash) => {
+  if (user.isModified("password")) {
+    bcrypt.genSalt(10, (err, salt) => {
       if (err) { return next(err); }
-      user.password = hash;
-      if (this.isNew) {
-        updateCodes(user);
-        Code.find({user_email: user.email})
-          .select("package_id")
-          .exec((err, packages) => {
-            if (packages) {
-              const packages_id = [];
-              packages.forEach((item: any) => { packages_id.push(item.package_id); });
-              Package.find({_id: packages_id}).select("course").exec((err, dataPackages) => {
-                const data = {};
-                for (let i = 0; i < dataPackages.length; i++ ) {
-                  data[dataPackages[i]["course"]._id] = dataPackages[i]["course"];
-                }
-                user["capabilities"]["courses"] = data;
-                next();
-              });
-            }
-          });
-      } else {
-        next();
-      }
+      bcrypt.hash(user.password, salt, undefined, (err: mongoose.Error, hash) => {
+        if (err) { return next(err); }
+        user.password = hash;
+      });
     });
-  });
+  }
+
+  if (this.isNew) {
+    console.log("Registration");
+    updateCodes(user);
+    Code.find({user_email: user.email})
+      .select("package_id")
+      .exec((err, packages) => {
+        if (packages) {
+          const packages_id = [];
+          packages.forEach((item: any) => { packages_id.push(item.package_id); });
+          Package.find({_id: packages_id}).select("course").exec((err, dataPackages) => {
+            const data = {};
+            for (let i = 0; i < dataPackages.length; i++ ) {
+              data[dataPackages[i]["course"]._id] = dataPackages[i]["course"];
+            }
+            user["capabilities"]["courses"] = data;
+            next();
+          });
+        }
+      });
+  } else {
+    console.log("update - save");
+    console.log(user);
+    next();
+  }
 });
 
 const comparePassword: comparePasswordFunction = function (candidatePassword, cb) {
