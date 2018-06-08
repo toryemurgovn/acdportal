@@ -116,10 +116,9 @@ const generateLicenseCode = () => {
     dataType: "json",
     data: { email: email }
   }).done((data) => {
-    alert(data.message);
     location.reload();
-  }).fail((data) => {
-    location.reload();
+  }).fail((data: any) => {
+    alert(data.responseJSON.message);
   });
 };
 
@@ -177,14 +176,9 @@ const inputLicenseCode = () => {
     dataType: "json",
     data: { code: licenseCode }
   }).done((data) => {
-    if (data.code) {
-      if (data.code == 100) {
-        // error
-        alert(data.msg);
-      }
-    }
     location.reload();
-  }).fail((data) => {
+  }).fail((data: any) => {
+    alert(data.responseJSON.message);
     // location.reload();
   });
 };
@@ -213,10 +207,10 @@ $(document).ready(function () {
       data: data,
       cache: false,
       success: function (resData) {
-        const jdata = parseData(resData);
-        $(".jtrs1name").text(jdata[1]);
-        $(".jtrs1amount").text(jdata[3]);
-        $(".jtrs1hash").text(jdata[5]);
+        $(".jtrs1name").text(resData.name);
+        $(".jtrs1amount").text(resData.amount);
+        $(".jtrs1hash").text(resData.hash);
+        (<any>$("#transaction-1")).collapse("show");
       },
       error: function (xhr, status, err) {
         showErrorMessage();
@@ -238,9 +232,9 @@ $(document).ready(function () {
       data: data,
       cache: false,
       success: function (resData) {
-        const jdata = parseData(resData);
-        $(".jtrs2prikey").text(jdata[1]);
-        $(".jtrs2pubkey").text(jdata[3]);
+        $(".jtrs2prikey").text(resData.privateKey);
+        $(".jtrs2pubkey").text(resData.publicKey);
+        (<any>$("#transaction-2")).collapse("show");
       },
       error: function (xhr, status, err) {
         showErrorMessage();
@@ -251,15 +245,30 @@ $(document).ready(function () {
   });
 
   $(".jcopytrs2prikey").on("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     $("#trs3prkey").val($(".jtrs2prikey").text());
+  });
+
+  $(".jcopytrs2public").on("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    $("#trs4pubkey").val($(".jtrs2pubkey").text());
   });
 
   jAssignment3.on("click", (event) => {
     event.preventDefault();
+    const name = $("input[name=trs3name]").val();
+    const amount = $("input[name=trs3amount]").val();
+    const prikey = $("input[name=trs3prkey]").val();
+    if (!name || !amount || !prikey) {
+      alert("Please input data!");
+      return;
+    }
     const data = {
-      name: $("input[name=trs3name]").val(),
-      amount: $("input[name=trs3amount]").val(),
-      prikey: $("input[name=trs3prkey]").val()
+      name: name,
+      amount: amount,
+      prikey: prikey
     };
 
     $.ajax({
@@ -268,11 +277,11 @@ $(document).ready(function () {
       data: data,
       cache: false,
       success: function (resData) {
-        const jdata = parseData(resData);
-        $(".jtrs3name").text(jdata[1]);
-        $(".jtrs3amount").text(jdata[3]);
-        $(".jtrs3hash").text(jdata[5]);
-        $(".jtrs3signature").text(jdata[9]);
+        $(".jtrs3name").text(resData.name);
+        $(".jtrs3amount").text(resData.amount);
+        $(".jtrs3hash").text(resData.hash);
+        $(".jtrs3signature").text(resData.signature);
+        (<any>$("#transaction-3")).collapse("show");
       },
       error: function (xhr, status, err) {
         showErrorMessage();
@@ -283,16 +292,26 @@ $(document).ready(function () {
   });
 
   $(".jcopytrs3sign").on("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     $("#trs4sign").val($(".jtrs3signature").text());
   });
 
   jAssignment4.on("click", (event) => {
     event.preventDefault();
+    const name = $("input[name=trs4name]").val();
+    const amount = $("input[name=trs4amount]").val();
+    const pubkey = $("input[name=trs4pubkey]").val();
+    const sign = $("input[name=trs4sign]").val();
+    if (!name || !amount || !pubkey || !sign) {
+      alert("Please input data!");
+      return;
+    }
     const data = {
-      name: $("input[name=trs4name]").val(),
-      amount: $("input[name=trs4amount]").val(),
-      pubkey: $("input[name=trs4pubkey]").val(),
-      sign: $("input[name=trs4sign]").val()
+      name: name,
+      amount: amount,
+      pubkey: pubkey,
+      sign: sign
     };
 
     $.ajax({
@@ -301,11 +320,11 @@ $(document).ready(function () {
       data: data,
       cache: false,
       success: function (resData) {
-        const jdata = parseData(resData);
-        $(".jtrs4name").text(jdata[1]);
-        $(".jtrs4amount").text(jdata[3]);
-        $(".jtrs4hash").text(jdata[5]);
-        $(".jtrs4valid").text(jdata[11]);
+        $(".jtrs4name").text(resData.name);
+        $(".jtrs4amount").text(resData.amount);
+        $(".jtrs4hash").text(resData.hash);
+        $(".jtrs4valid").text(resData.valid);
+        (<any>$("#transaction-4")).collapse("show");
       },
       error: function (xhr, status, err) {
         showErrorMessage();

@@ -15,171 +15,165 @@ block content
   include error-modal
   section.about.pb-5
     .container
-      ol.mt-5
-        li
-          .row
-            .col-12
-              h4
-                | Calculate the hash of very simple transaction
-          .row
-            .col-12.col-md-6
-              h4
-                | Input
-              form.p-2
-                .form-group
-                  label(for = "trs1name") Name
-                  input#trs1name.form-control(type = "text", name = "trs1_name")
-                  small.form-text.text-muted
-                    | Example: Bob
-                .form-group
-                  label(for = "trs1amount") Amount
-                  input#trs1amount.form-control(type = "number", name = "trs1_amount")
-                button#jsubmit1.btn.btn-primary(type = "submit") Submit
-            .col-12.col-md-6
-              h4.w-100
-                | Output
-              ul.list-group.list-group-flush.output-panel
-                li.list-group-item
-                  code.text-uppercase
-                    | Name:
-                  p.jtrs1name
-                li.list-group-item
-                  code.text-uppercase
-                    | Amount:
-                  p.jtrs1amount
-                li.list-group-item
-                  code.text-uppercase
-                    | Hash:
-                  p.jtrs1hash
-          hr
-        li
-          .row
-            .col-12
-              h4
-                | Generate a keypair from a passphrase
-          .row
-            .col-12.col-md-6
-              h4
-                | Input
-              form.p-2
-                .form-group
-                  label(for = "trs2passphrase") PASSPHRASE
-                  input#trs2Passphrase.form-control(type = "text", name="trs2Passphrase")
-                  small.form-text.text-muted
-                    | Example: dontforget
-                button#jsubmit2.btn.btn-primary(type = "submit") Submit
+      h3
+        | 1. Calculate the hash of very simple transaction
+      h4.text-primary
+        | Please input name and amount
+      form.p-2
+        .form-group
+          label(for = "trs1name") Name
+          input#trs1name.form-control(type = "text", name = "trs1_name")
+          small.form-text.text-muted
+            | Example: Bob
+        .form-group
+          label(for = "trs1amount") Amount
+          input#trs1amount.form-control(type = "number", name = "trs1_amount")
+        button#jsubmit1.btn.btn-primary(type = "submit") Submit
+      .card.mt-2
+        #transaction-1.collapse.card-body
+          h4.text-primary
+            | Result output
+          code.text-uppercase
+            | Name:
+          pre
+            code.jtrs1name          
+          code.text-uppercase
+            | Amount:
+          pre
+            code.jtrs1amount    
+          code.text-uppercase
+            | Hash:
+          pre
+            code.jtrs1hash
+      hr.bg-danger.mb-5
 
-            .col-12.col-md-6
-              h4.w-100
-                | Output
-              ul.list-group.list-group-flush.output-panel
-                li.list-group-item
-                  code.text-uppercase
-                    | PRIVATEKEY:
-                  button.jcopytrs2prikey(href="#")
-                    | Copy
-                  p.jtrs2prikey
-                li.list-group-item
-                  code.text-uppercase
-                    | PUBLICKEY:
-                  p.jtrs2pubkey
-          hr
-        li
-          .row
-            .col-12
-              h4
-                | Create a signature by using the private key to encrypt the hash of the transaction
-          .row
-            .col-12.col-md-6
-              h4
-                | Input
-              form.p-2
-                .form-group
-                  label(for = "trs3name") Name
-                  input#trs3name.form-control(type = "text", name = "trs3name")
-                  small.form-text.text-muted
-                    | Example: Bob
-                .form-group
-                  label(for = "trs3amount") Amount
-                  input#trs3amount.form-control(type = "number", name = "trs3amount")
-                .form-group
-                  label(for = "trs3prkey") Private Key
-                  input#trs3prkey.form-control(type = "text", name = "trs3prkey")
-                  small.form-text.text-muted
-                    | Copy from previous task
-                button#jsubmit3.btn.btn-primary(type = "submit") Submit
+      h3
+        | 2. Generate a keypair from a passphrase
+      h4.text-primary
+        | Please input data
+      form.p-2
+        .form-group
+          label(for = "trs2passphrase") Passphrase
+          input#trs2Passphrase.form-control(type = "text", name="trs2Passphrase")
+          small.form-text.text-muted
+            | Example: dontforget
+        button#jsubmit2.btn.btn-primary(type = "submit") Submit
+      .card.mt-2
+        #transaction-2.collapse.card-body
+          h4.text-primary
+            | Output
+          div
+            code.text-uppercase
+              | PRIVATEKEY:
+            pre
+              code.jtrs2prikey
+            button.btn.btn-sm.btn-outline-primary.mb-2.jcopytrs2prikey
+              | Copy private key   
+          div                     
+            code.text-uppercase
+              | PUBLICKEY:
+            pre
+              code.jtrs2pubkey
+      hr.bg-danger.mb-5
 
-            .col-12.col-md-6
-              h4.w-100
-                | Output
-              ul.list-group.list-group-flush.output-panel
-                li.list-group-item
-                  code.text-uppercase
-                    | Name:
-                  p.jtrs3name
-                li.list-group-item
-                  code.text-uppercase
-                    | Amount:
-                  p.jtrs3amount
-                li.list-group-item
-                  code.text-uppercase
-                    | Hash:
-                  p.jtrs3hash
-                li.list-group-item
-                  code.text-uppercase
-                    | SIGNATURE:
-                  button.jcopytrs3sign(href="#")
-                    | Copy
-                  p.jtrs3signature
+      h3
+        | 3. Create a signature by using the private key to encrypt the hash of the transaction
+      h4.text-primary
+        | Please input data
+      form.p-2
+        .form-group
+          label(for = "trs3name") Name
+          input#trs3name.form-control(type = "text", name = "trs3name")
+          small.form-text.text-muted
+            | Example: Bob
+        .form-group
+          label(for = "trs3amount") Amount
+          input#trs3amount.form-control(type = "number", name = "trs3amount")
+        .form-group
+          label(for = "trs3prkey") 
+            span
+              | Private Key
+            button.btn.btn-sm.btn-link.ml-2.jcopytrs2prikey
+              | Get private key from previous task
+          input#trs3prkey.form-control(type = "text", name = "trs3prkey")
+          small.form-text.text-muted
+            | Copy from previous task
+        button#jsubmit3.btn.btn-primary(type = "submit") Submit
+      .card.mt-2
+        #transaction-3.collapse.card-body
+          h4.text-primary
+            | Output
 
-          hr
-        li
-          .row
-            .col-12
-              h4
-                | Verify a signature by decrypting it with the public key, then comparing to the transaction hash
-          .row
-            .col-12.col-md-6
-              h4
-                | Input
-              form.p-2
-                .form-group
-                  label(for = "trs4name") Name
-                  input#trs4name.form-control(type = "text", name = "trs4name")
-                  small.form-text.text-muted
-                    | Example: Bob
-                .form-group
-                  label(for = "trs4amount") Amount
-                  input#trs4amount.form-control(type = "number", name = "trs4amount")
-                .form-group
-                  label(for = "trs4pubkey") Public key
-                  input#trs4pubkey.form-control(type = "text", name = "trs4pubkey")
-                  small.form-text.text-muted
-                    | Copy from task #2
-                .form-group
-                  label(for = "trs4sign") Signature
-                  input#trs4sign.form-control(type = "text", name = "trs4sign")
-                  small.form-text.text-muted
-                    | Copy from previous task
-                button#jsubmit4.btn.btn-primary(type = "submit") Submit
+          code.text-uppercase
+            | Name:
+          pre
+            code.jtrs3name
+          code.text-uppercase
+            | Amount:
+          pre
+            code.jtrs3amount
+          code.text-uppercase
+            | Hash:
+          pre
+            code.jtrs3hash
+          div
+            code.text-uppercase
+              | SIGNATURE:
+            pre
+              code.jtrs3signature    
+            button.btn.btn-sm.btn-outline-primary.mb-2.jcopytrs3sign
+              | Copy signature               
+      hr.bg-danger.mb-5
 
-            .col-12.col-md-6
-              h4.w-100
-                | Output
-              ul.list-group.list-group-flush.output-panel
-                li.list-group-item
-                  code.text-uppercase
-                    | Name:
-                  p.jtrs4name
-                li.list-group-item
-                  code.text-uppercase
-                    | Amount:
-                  p.jtrs4amount
-                li.list-group-item
-                  code.text-uppercase
-                    | Hash:
-                  p.jtrs4hash
-                li.list-group-item
-                  code.text-uppercase
-                    | validated:
-                  p.jtrs4valid
+      h3
+        | 4. Verify a signature by decrypting it with the public key, then comparing to the transaction hash
+      h4.text-primary
+        | Please input data
+      form.p-2
+        .form-group
+          label(for = "trs4name") Name
+          input#trs4name.form-control(type = "text", name = "trs4name")
+          small.form-text.text-muted
+            | Example: Bob
+        .form-group
+          label(for = "trs4amount") Amount
+          input#trs4amount.form-control(type = "number", name = "trs4amount")
+        .form-group
+          label(for = "trs4pubkey")
+            span
+              | Public key
+            button.btn.btn-sm.btn-link.ml-2.jcopytrs2public
+              | Get public key from #2 task               
+          input#trs4pubkey.form-control(type = "text", name = "trs4pubkey")
+          small.form-text.text-muted
+            | Copy from task #2
+        .form-group
+          label(for = "trs4sign")
+            span
+              | Signature
+            button.btn.btn-sm.btn-link.ml-2.jcopytrs3sign
+              | Get signature from previous task       
+          input#trs4sign.form-control(type = "text", name = "trs4sign")
+          small.form-text.text-muted
+            | Copy from previous task
+        button#jsubmit4.btn.btn-primary(type = "submit") Submit
+      .card.mt-2
+        #transaction-4.collapse.card-body
+          h4.text-primary
+            | Output
+
+          code.text-uppercase
+            | Name:
+          p.jtrs4name
+
+          code.text-uppercase
+            | Amount:
+          p.jtrs4amount
+
+          code.text-uppercase
+            | Hash:
+          p.jtrs4hash
+
+          code.text-uppercase
+            | validated:
+          p.jtrs4valid

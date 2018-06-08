@@ -12,7 +12,7 @@ block content
         th(scope='col') Created at
         th(scope='col') View
     tbody
-      - let index = 1;
+    - let index = 1
       each course in user.capabilities.courses || []
         tr
           th(scope='row')= index++

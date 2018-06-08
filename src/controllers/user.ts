@@ -95,12 +95,12 @@ export const applyCode = (req: Request, res: Response) => {
     console.log(" UserID " + req.user._id + "  apply code: " + code);
     Code.findById(code, (err, codeInfo: any) => {
       if (err) {
-        return res.json({ code: 100, msg: "This Code doesn't exist" });
+        return res.status(422).json({ code: 100, message: "This Code doesn't exist" });
       }
       if (codeInfo) {
         const isExistCode = codeInfo.user_email && codeInfo.user_email !== req.user.email;
         if (codeInfo.status == false || codeInfo.user_id || isExistCode) {
-          return res.json({ msg: "Your code has been used", code: 100 });
+          return res.status(422).json({ message: "Your code has been used", code: 100 });
         }
 
         codeInfo.user_id = req.user._id;
@@ -109,19 +109,19 @@ export const applyCode = (req: Request, res: Response) => {
         codeInfo.status = false;
         codeInfo.save(function (err) {
           if (err) {
-            return res.json({ msg: err.message.toString(), code: 100 });
+            return res.status(422).json({ message: err.message.toString(), code: 100 });
           }
           Package.findOne({ _id: codeInfo.package_id }, (err, packageData: any) => {
             if (!req.user.capabilities["courses"]) req.user.capabilities["courses"] = {};
             req.user.capabilities["courses"][packageData.course_id] = packageData.course;
             User.update({_id: req.user._id}, {capabilities: req.user.capabilities}).exec();
           });
-          return res.json({ msg: "Code successfully updated!", code: 200 });
+          return res.json({ message: "Code successfully updated!", code: 200 });
         });
       }
     });
 
   } else {
-    return res.json({ message: "Can not apply", code: 422 });
+    return res.status(422).json({ message: "Can not apply", code: 422 });
   }
 };
