@@ -113,7 +113,11 @@ export const applyCode = (req: Request, res: Response) => {
           }
           Package.findOne({ _id: codeInfo.package_id }, (err, packageData: any) => {
             if (!req.user.capabilities["courses"]) req.user.capabilities["courses"] = {};
-            req.user.capabilities["courses"][packageData.course_id] = packageData.course;
+            const course = packageData.course;
+            course["start_time"] = new Date("Jun 02, 2018");
+            course["end_time"] = new Date("Jul 01, 2018");
+            req.user.capabilities["courses"][packageData.course_id] = course;
+            console.log(req.user.capabilities["courses"]);
             User.update({_id: req.user._id}, {capabilities: req.user.capabilities}).exec();
           });
           return res.json({ message: "Code successfully updated!", code: 200 });

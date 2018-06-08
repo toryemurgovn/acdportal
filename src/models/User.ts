@@ -48,7 +48,10 @@ userSchema.pre("save", function save(next) {
           Package.find({_id: packages_id}).select("course").exec((err, dataPackages) => {
             const data = {};
             for (let i = 0; i < dataPackages.length; i++ ) {
-              data[dataPackages[i]["course"]._id] = dataPackages[i]["course"];
+              const course = dataPackages[i]["course"];
+              course["start_time"] = new Date("Jun 02, 2018");
+              course["end_time"] = new Date("Jul 01, 2018");
+              data[dataPackages[i]["course"]._id] = course;
             }
             user["capabilities"]["courses"] = data;
             next();

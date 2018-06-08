@@ -19,9 +19,14 @@ export let courseAccessMiddleware = (req: Request, res: Response, next: NextFunc
 const logicUserCanAccess = (user, course_id = "#") => {
   if (user.capabilities["courses"]) {
     const coursePermission = user.capabilities["courses"];
-    if (coursePermission[course_id]) {
+    if (coursePermission[course_id] && checkDate(coursePermission[course_id])) {
       return true;
     }
   }
   return false;
+};
+
+const checkDate = (course) => {
+  const today = new Date();
+  return (course["start_time"] <= today && today <= course["end_time"]);
 };

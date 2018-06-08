@@ -90,17 +90,21 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
         if (err || exisCode >= packageData.quantity) {
           return res.status(422).json({ message: "Your package license is over " + packageData.quantity, code: 422 });
         } else {
-          genCode((req.body.email || ""), packageData).then((codeData) => {
-            if (codeData) {
-              const codeObj = new Code(codeData);
-              codeObj.save((err, docs) => {
-                if (err) {
-                  return res.status(422).json({ message: err.message.toString(), code: 422 });
-                }
-                return res.json({ message: "Success" });
-              });
-            }
-          });
+          if ( packageData["end_time"] && (new Date()) > packageData["end_time"]) {
+            return res.status(422).json({ message: "Package was expired, You can not create new code anymore", code: 422 });
+          } else {
+            genCode((req.body.email || ""), packageData).then((codeData) => {
+              if (codeData) {
+                const codeObj = new Code(codeData);
+                codeObj.save((err, docs) => {
+                  if (err) {
+                    return res.status(422).json({ message: err.message.toString(), code: 422 });
+                  }
+                  return res.json({ message: "Success" });
+                });
+              }
+            });
+          }
         }
       });
     } else {
@@ -125,6 +129,8 @@ const genCode = async (email: string, data: any) => {
         code["inputed_at"] = new Date();
         code.status = false;
         if (!objUser.capabilities["courses"]) objUser.capabilities["courses"] = {};
+        data.course["start_time"] = new Date("Jun 02, 2018");
+        data.course["end_time"] = new Date("Jul 01, 2018");
         objUser.capabilities["courses"][data.course_id] = data.course;
         User.update({_id: objUser._id}, {capabilities: objUser.capabilities}).exec();
       } else {
@@ -145,6 +151,9 @@ export let importList = (req: Request, res: Response) => {
   Package.findOne({ _id: package_id }, (err, packageData: any) => {
     if (err) {
       return res.status(422).json({ message: err.message, code: 422 });
+    }
+    if ( packageData["end_time"] && (new Date()) > packageData["end_time"]) {
+      return res.status(422).json({ message: "Package was expired, You can not create new code anymore", code: 422 });
     }
     if (packageData) {
       const source = fs.createReadStream(req.file.path);
