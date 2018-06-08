@@ -15,13 +15,13 @@ const BC_INFO = {
 
 export const totalFaucetBalance = (req: Request, res: Response) => {
   bitcoin_rpc.init(BC_INFO.host, BC_INFO.port, BC_INFO.username, BC_INFO.password);
-  return bitcoin_rpc.call("getbalance", [], async(err: any, data: any) => {
+  bitcoin_rpc.call("getbalance", [], async(err: any, data: any) => {
     if (err !== null) {
       console.log("error");
-      return 0;
+      res.status(422).json({ symbol: "BTC" });
     } else {
       console.log(util.inspect(data.result, false, undefined));
-      return res.status(200).json({ balance: util.inspect(data.result, false, undefined), symbol: "BTC" });
+      res.json({ balance: util.inspect(data.result, false, undefined), symbol: "BTC" });
     }
   });
 };

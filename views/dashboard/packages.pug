@@ -42,18 +42,17 @@ block content
               option(disabled, selected) -- select an option --            
               each course in courses
                 option(value=course.id, disabled=course.status !== 1)=course.name + (course.status === 1 ? '' : ' (Coming soon)')
-          //- .form-group
-          //-   label(for='inputTime') Expired in
-          //-   select#inputTime.form-control
-          //-     option(disabled, selected) -- select an option --
-          //-     option 1 month
-          //-     option 3 months
-          //-     option 6 months
-          //-     option 1 year
           .form-group
             label(for='inputQuantity') Quantity
             input#inputQuantity.form-control(type='number', placeholder='Quantity')
-
+          .form-group
+            label(for='inputStartTime') Start time
+            input#inputStartTime.form-control(data-provide="datepicker")
+          .form-group
+            label(for='inputEndTime') End time
+            input#inputEndTime.form-control(data-provide="datepicker")
+          #register-package.alert.alert-warning(role="alert").collapse
+            | Please check your input data!
         .modal-footer
           button.btn.btn-light(type='button', data-dismiss='modal') Cancel
           button.btn.btn-primary(type='button', onclick="registerPackage()") Submit

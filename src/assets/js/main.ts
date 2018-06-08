@@ -66,7 +66,7 @@ $(document).ready(() => {
   setInterval(() => {
     // update faucet balance
     getTotalFaucetBalance();
-  }, 3000);
+  }, 6000);
 
   $("#faucetModal .btn-get-coin").on("click", (event) => {
     event.preventDefault();
@@ -115,23 +115,26 @@ const getPackages = () => {
 const registerPackage = () => {
   const quantity: any = $("#inputQuantity").val();
   const course_id = $("#inputCourse").val();
-  if (quantity && course_id) {
+  const startTime = (<any>$("#inputStartTime")).datepicker("getDate");
+  const endTime = (<any>$("#inputEndTime")).datepicker("getDate");
+  if (quantity && course_id && startTime && endTime) {
+    (<any>$("#register-package")).collapse("hide");
+
     $.ajax({
       url: "/api/packages",
       method: "POST",
       dataType: "json",
       data: {
         quantity: parseInt(quantity),
-        course_id: course_id
+        course_id: course_id,
+        start_time: startTime,
+        end_time: endTime
       }
     }).done((data) => {
-      // console.log(data);
-      // const modalPopup: any = $("#registerPackageModel");
-      // modalPopup.modal("hide");
       location.reload();
     });
   } else {
-
+    (<any>$("#register-package")).collapse("show");
   }
 };
 
