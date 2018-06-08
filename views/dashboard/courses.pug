@@ -12,10 +12,9 @@ block content
         th(scope='col') Created at
         th(scope='col') View
     tbody
-      - let index = 1;
-      each course in user.capabilities.courses || []
+      each course, index in user.capabilities.courses || []
         tr
-          th(scope='row')= index++
+          th(scope='row')= index + 1
           td= course.name
           td= moment(course.createdAt).format('MMM DD YYYY')
           td

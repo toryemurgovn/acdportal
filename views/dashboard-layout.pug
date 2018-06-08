@@ -34,18 +34,23 @@ html(lang='en')
             .bd-toc-item
               a.bd-toc-link(href='/dashboard/profile')
                 | Profile
-            if user && user.role !== "partner"
+            if user && user.role === "user"
               .bd-toc-item
                 a.bd-toc-link(href='/dashboard/courses')
                   | Courses
-            end 
-   
+            end
             if user && user.role === "partner"
               .bd-toc-item
                 a.bd-toc-link(href='/dashboard/packages')
                   | Packages
             end
             if user && user.role === "admin"
+              .bd-toc-item
+                a.bd-toc-link(href='/dashboard')
+                  | List courses            
+              .bd-toc-item
+                a.bd-toc-link(href='/dashboard/admin/packages')
+                  | Packages
               .bd-toc-item
                 a.bd-toc-link(href='/dashboard/admin/packages-request')
                   | Request Packages

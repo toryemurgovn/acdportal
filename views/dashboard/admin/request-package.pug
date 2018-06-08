@@ -5,21 +5,24 @@ block content
     thead
       tr
         th(scope='col') #
-        th(scope='col') Partner_id  - Name
+        th(scope='col') Partner
         th(scope='col') Course
         th(scope='col') Quantity
         th(scope='col') Status
-        th(scope='col') Created at
+        th(scope='col') Requested at
         th(scope='col') 
     tbody
+      - const status = { 0: "Pendding", 1: "Approved", 2: "Disapproved"}
       each package, index in reqPackages
         tr
           th(scope='row') #{index + 1}
-          td= package.partner_id
+          td= package.partner_email
           td= package.course.name
           td= package.quantity
-          td= package.status
+          td= status[package.status]
           td= moment(package.createdAt).format('MMM DD YYYY') 
           td 
-            a.btn.btn-outline-primary.btn-sm.jRequestPackage(href='/api/admin/package-status', data-id= package.id, data-action="approve") Approve
-            a.btn.btn-outline-primary.btn-sm.jRequestPackage(href='/api/admin/package-status', data-id= package.id) Disapprove
+            if package.status === 0
+              a.btn.btn-success.btn-sm.jRequestPackage(href='/api/admin/package-status', data-id= package.id, data-action="approve") Approve
+              a.ml-2.btn.btn-danger.btn-sm.jRequestPackage(href='/api/admin/package-status', data-id= package.id) Disapprove
+            end

@@ -70,6 +70,7 @@ export let show = (req: Request, res: Response) => {
 const createPackage = async (partner, params, courseData) => {
   return new Package({
     partner_id: partner.id,
+    partner_email: partner.email,
     quantity: params.quantity,
     describle: params.describle,
     course_id: params.course_id,

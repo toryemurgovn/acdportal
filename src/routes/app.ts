@@ -95,6 +95,7 @@ router.use("/dashboard/admin/*", (req, res, next) => {
 });
 
 router.get("/dashboard/admin/packages-request", tpmController.requestPackage);
+router.get("/dashboard/admin/packages", tpmController.viewAllPackages);
 
 router.use("/api/admin/*", (req, res, next) => {
   if (req.user) {

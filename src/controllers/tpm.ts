@@ -30,3 +30,11 @@ export const requestPackage = (req: Request, res: Response) => {
     });
   });
 };
+
+export const viewAllPackages = (req: Request, res: Response) => {
+  Package.find({}, (err, reqPackages) => {
+    res.render("dashboard/admin/request-package", {
+      reqPackages: reqPackages
+    });
+  });
+};

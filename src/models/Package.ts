@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 
 export type PackageModel = mongoose.Document & {
   partner_id: string,
+  partner_email: string,
   course_id: string,
   course: CourseModel,
   quantity: { type: number, default: 100 },
@@ -16,6 +17,7 @@ export type PackageModel = mongoose.Document & {
 
 const packageSchema = new mongoose.Schema({
   partner_id: Schema.Types.ObjectId,
+  partner_email: String,
   quantity: Number,
   describe: String,
   course_id: {type: Schema.Types.ObjectId, required: true},

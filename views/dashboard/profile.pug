@@ -1,21 +1,22 @@
 extends ../dashboard-layout
 
 block content
-  .page-header.mt-5.mb-2
-    h3 Profile information
-  form
-    .form-group
-      label(for='email') Email address
-      input#email.form-control(type='email', aria-describedby='emailHelp', placeholder='Email', value=user ? user.email : '')     
-    button.btn.btn-primary(type='submit') Update profile
-  hr
-  .page-header.mt-5.mb-2
-    h3 Change Password
-  form
-    .form-group
-      label(for='password') New Password
-      input#password.form-control(type='password', placeholder='Password')
-    .form-group
-      label(for='confirmPassword') Confirm Password
-      input#confirmPassword.form-control(type='password', placeholder='Confirm Password')        
-    button.btn.btn-primary(type='submit') Update password
+  .mb-5.mt-5
+    .page-header.mb-2
+      h3 Profile information
+    form
+      .form-group
+        label(for='email') Email address
+        input#email.form-control(type='email', aria-describedby='emailHelp', placeholder='Email', value=user ? user.email : '', disabled)     
+      button.btn.btn-primary(type='submit', disabled) Update profile
+    hr
+    .page-header.mt-5.mb-2
+      h3 Change Password
+    form
+      .form-group
+        label(for='password') New Password
+        input#password.form-control(type='password', placeholder='Password', disabled)
+      .form-group
+        label(for='confirmPassword') Confirm Password
+        input#confirmPassword.form-control(type='password', placeholder='Confirm Password', disabled)        
+      button.btn.btn-primary(type='submit', disabled) Update password

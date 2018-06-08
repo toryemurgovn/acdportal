@@ -115,9 +115,12 @@ const generateLicenseCode = () => {
     method: "POST",
     dataType: "json",
     data: { email: email }
-  }).done((data) => {
-    alert(data.message);
-    location.reload();
+  }).done((data, text, xhr) => {
+    if (xhr.status !== 200) {
+      alert(data.message);
+    } else {
+      location.reload();
+    }
   }).fail((data) => {
     location.reload();
   });
