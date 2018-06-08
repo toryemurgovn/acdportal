@@ -19,7 +19,11 @@ block content
           td= course.name
           td= moment(course.createdAt).format('MMM DD YYYY')
           td
-            a.btn.btn-outline-primary.btn-sm(href=`/courses/${course._id}`) View
+            if course.start_time < new Date() && course.end_time >= new Date()
+              a.btn.btn-outline-primary.btn-sm(href=`/courses/${course._id}`) View
+            else
+              | Expired
+            end
   #inputCodeToLearn.modal.fade(tabindex='-1', role='dialog', aria-labelledby='inputCodeToLearn', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
       .modal-content
