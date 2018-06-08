@@ -12,7 +12,7 @@ block content
         th(scope='col') Requested at
         th(scope='col') 
     tbody
-      - const status = { 0: "Pendding", 1: "Approved", 2: "Disapproved"}
+      - const status = { 0: "Pending", 1: "Approved", 2: "Disapproved"}
       each package, index in reqPackages
         tr
           th(scope='row') #{index + 1}

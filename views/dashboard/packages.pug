@@ -12,10 +12,12 @@ block content
         //- th(scope='col') Expired in
         th(scope='col') Quantity
         th(scope='col') Status
+        th(scope='col') Start
+        th(scope='col') End
         th(scope='col') Created at
         th(scope='col') 
     tbody
-      - const status = { 0: "Pendding", 1: "Approved", 2: "Disapproved"}
+      - const status = { 0: "Pending", 1: "Approved", 2: "Disapproved"}
       each package, index in listPackage
         tr
           th(scope='row') #{index + 1}
@@ -23,6 +25,8 @@ block content
           //- td 6 Months
           td #{package.quantity}
           td= status[package.status]
+          td= moment(package.start_time).format('MMM DD YYYY') 
+          td= moment(package.end_time).format('MMM DD YYYY') 
           td= moment(package.createdAt).format('MMM DD YYYY') 
           td
             if package.status === 1
