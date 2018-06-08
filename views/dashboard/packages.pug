@@ -41,7 +41,15 @@ block content
             select#inputCourse.form-control
               option(disabled, selected) -- select an option --            
               each course in courses
-                option(value=course.id)=course.name
+                option(value=course.id, disabled=course.status !== 1)=course.name + (course.status === 1 ? '' : ' (Coming soon)')
+          //- .form-group
+          //-   label(for='inputTime') Expired in
+          //-   select#inputTime.form-control
+          //-     option(disabled, selected) -- select an option --
+          //-     option 1 month
+          //-     option 3 months
+          //-     option 6 months
+          //-     option 1 year
           .form-group
             label(for='inputQuantity') Quantity
             input#inputQuantity.form-control(type='number', placeholder='Quantity')

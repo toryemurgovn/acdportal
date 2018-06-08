@@ -1,19 +1,16 @@
 extends ../dashboard-layout
 
 block content
-  table.table
-    thead
-      tr
-        th(scope='col') #
-        th(scope='col') Course name
-        th(scope='col') Created at
-        //- th(scope='col') Progress
-    tbody
-      each course in courses
-        tr
-          th(scope='row') 1
-          td= course.name
-          td= moment(course.createdAt).format('MMM DD YYYY')  
-          //- td
-          //-   .progress
-          //-     .progress-bar(role='progressbar', style='width: 25%;', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100') 25%
+    .mt-5
+      table.table
+        thead
+          tr
+            th(scope='col') #
+            th(scope='col') Course name
+            th(scope='col') Created at
+        tbody
+          each course in courses
+            tr
+              th(scope='row') 1
+              td= course.name
+              td= course.status === 1 ? moment(course.createdAt).format('MMM DD YYYY') : 'Coming soon'
