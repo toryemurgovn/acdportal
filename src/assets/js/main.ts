@@ -75,7 +75,7 @@ const getPackages = () => {
 const registerPackage = () => {
   const quantity: any = $("#inputQuantity").val();
   const course_id = $("#inputCourse").val();
-  if (quantity) {
+  if (quantity && course_id) {
     $.ajax({
       url: "/api/packages",
       method: "POST",

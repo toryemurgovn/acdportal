@@ -12,7 +12,7 @@ html(lang='en')
     link(rel='stylesheet', href='/css/main.css')
 
   body
-    header.navbar.navbar-expand.navbar-dark.flex-column.flex-md-row.bd-navbar
+    header.navbar.navbar-expand.navbar-dark.flex-column.flex-md-row.bd-navbar(class=user.role)
       ul.navbar-nav.flex-row.ml-md-auto.md-flex
         li.nav-item.dropdown
           a#bd-versions.nav-item.nav-link.dropdown-toggle.mr-md-2(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
@@ -28,9 +28,9 @@ html(lang='en')
       .row.flex-xl-nowrap
         .col-12.col-md-3.col-xl-2.bd-sidebar
           nav#bd-docs-nav.bd-links.collapse.show(style='')
-            .bd-toc-item
-              a.bd-toc-link(href='/dashboard')
-                | Dashboard
+            //- .bd-toc-item
+            //-   a.bd-toc-link(href='/dashboard')
+            //-     | Dashboard
             .bd-toc-item
               a.bd-toc-link(href='/dashboard/profile')
                 | Profile
