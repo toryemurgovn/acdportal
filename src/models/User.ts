@@ -45,12 +45,12 @@ userSchema.pre("save", function save(next) {
         if (packages) {
           const packages_id = [];
           packages.forEach((item: any) => { packages_id.push(item.package_id); });
-          Package.find({_id: packages_id}).select("course").exec((err, dataPackages) => {
+          Package.find({_id: packages_id}).select("course").exec((err, dataPackages: any) => {
             const data = {};
             for (let i = 0; i < dataPackages.length; i++ ) {
               const course = dataPackages[i]["course"];
-              course["start_time"] = new Date("Jun 02, 2018");
-              course["end_time"] = new Date("Jul 01, 2018");
+              course["start_time"] = dataPackages[i].start_time;
+              course["end_time"] = dataPackages[i].end_time;
               data[dataPackages[i]["course"]._id] = course;
             }
             user["capabilities"]["courses"] = data;

@@ -75,6 +75,8 @@ const createPackage = async (partner, params, courseData) => {
     describle: params.describle,
     course_id: params.course_id,
     course: courseData,
+    start_time: new Date(params.start_time),
+    end_time: new Date(params.end_time),
     status: 0
   });
 };
@@ -86,11 +88,11 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
       return res.status(422).json({ message: err.message, code: 422 });
     }
     if (packageData) {
-      Code.count({package_id: packageData._id}, (err, exisCode) => {
+      Code.count({ package_id: packageData._id }, (err, exisCode) => {
         if (err || exisCode >= packageData.quantity) {
           return res.status(422).json({ message: "Your package license is over " + packageData.quantity, code: 422 });
         } else {
-          if ( packageData["end_time"] && (new Date()) > packageData["end_time"]) {
+          if (packageData["end_time"] && (new Date()) > packageData["end_time"]) {
             return res.status(422).json({ message: "Package was expired, You can not create new code anymore", code: 422 });
           } else {
             genCode((req.body.email || ""), packageData).then((codeData) => {
@@ -115,24 +117,24 @@ export let generateCodePackage = (req: Request, res: Response, next: NextFunctio
 
 const genCode = async (email: string, data: any) => {
   const code = {
-      package_id: data._id,
-      user_id: "",
-      partner_id: data.partner_id,
-      user_email: email,
-      status: true
-    };
+    package_id: data._id,
+    user_id: "",
+    partner_id: data.partner_id,
+    user_email: email,
+    status: true
+  };
   if (email) {
-    await User.findOne({email: email}, (err, objUser: any) => {
+    await User.findOne({ email: email }, (err, objUser: any) => {
       if (err) { return code; }
       if (objUser) {
         code.user_id = objUser._id;
         code["inputed_at"] = new Date();
         code.status = false;
         if (!objUser.capabilities["courses"]) objUser.capabilities["courses"] = {};
-        data.course["start_time"] = new Date("Jun 02, 2018");
-        data.course["end_time"] = new Date("Jul 01, 2018");
+        data.course["start_time"] = data.start_time;
+        data.course["end_time"] = data.end_time;
         objUser.capabilities["courses"][data.course_id] = data.course;
-        User.update({_id: objUser._id}, {capabilities: objUser.capabilities}).exec();
+        User.update({ _id: objUser._id }, { capabilities: objUser.capabilities }).exec();
       } else {
         sendInvitation(email);
       }
@@ -152,7 +154,7 @@ export let importList = (req: Request, res: Response) => {
     if (err) {
       return res.status(422).json({ message: err.message, code: 422 });
     }
-    if ( packageData["end_time"] && (new Date()) > packageData["end_time"]) {
+    if (packageData["end_time"] && (new Date()) > packageData["end_time"]) {
       return res.status(422).json({ message: "Package was expired, You can not create new code anymore", code: 422 });
     }
     if (packageData) {
@@ -176,7 +178,7 @@ export let importList = (req: Request, res: Response) => {
 
       const generateList = () => {
         const size = output.length;
-        Code.count({package_id: packageData._id}, (err, exisCode) => {
+        Code.count({ package_id: packageData._id }, (err, exisCode) => {
           if (err || (exisCode + size) > packageData.quantity) {
             console.log("Exit");
             return res.status(422).json({ message: "List input account makes your package license will be over " + packageData.quantity, code: 422 });

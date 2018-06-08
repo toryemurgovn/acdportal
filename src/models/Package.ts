@@ -12,6 +12,8 @@ export type PackageModel = mongoose.Document & {
   course: CourseModel,
   quantity: { type: number, default: 100 },
   describe: string,
+  start_time: Date,
+  end_time: Date,
   status: { type: number, default: 0 } // 0 = pendding, 1 = active, 2 = disactived
 };
 
@@ -22,6 +24,8 @@ const packageSchema = new mongoose.Schema({
   describe: String,
   course_id: {type: Schema.Types.ObjectId, required: true},
   course: {type: Object, required: true},
+  start_time: Date,
+  end_time: Date,
   status: { type: Number, default: 0 } // true = available to use
 }, { timestamps: true });
 
