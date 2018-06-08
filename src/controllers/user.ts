@@ -116,7 +116,7 @@ export const applyCode = (req: Request, res: Response) => {
             req.user.capabilities["courses"][packageData.course_id] = packageData.course;
             User.update({_id: req.user._id}, {capabilities: req.user.capabilities}).exec();
           });
-          return res.status(422).json({ message: "Code successfully updated!", code: 200 });
+          return res.json({ message: "Code successfully updated!", code: 200 });
         });
       }
     });
