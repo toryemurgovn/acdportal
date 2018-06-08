@@ -11,6 +11,7 @@ import * as partnerController from "../controllers/partner";
 import * as packagesController from "../controllers/packages";
 import * as tpmController from "../controllers/tpm";
 import * as apiAdminController from "../controllers/api/admin";
+import * as apiFaucetController from "../controllers/api/faucet";
 
 import * as middleware from "./middleware";
 const router = Router();
@@ -109,5 +110,21 @@ router.use("/api/admin/*", (req, res, next) => {
 });
 
 router.post("/api/admin/package-status", apiAdminController.packageStatus);
+
+
+router.use("/api/faucet/*", (req, res, next) => {
+  if (req.user) {
+    if (req.user.role !== "user") {
+      res.status(403).send("Permission denied");
+    }
+    next();
+  } else {
+    res.status(403).send("Permission denied");
+  }
+});
+
+router.post("/api/faucet/send-coin-to-address", apiFaucetController.getFreeCoin);
+router.get("/api/faucet/get-faucet-balance", apiFaucetController.totalFaucetBalance);
+
 
 module.exports = router;

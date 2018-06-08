@@ -27,36 +27,10 @@ html(lang='en')
     .container-fluid
       .row.flex-xl-nowrap
         .col-12.col-md-3.col-xl-2.bd-sidebar
-          nav#bd-docs-nav.bd-links.collapse.show(style='')
-            //- .bd-toc-item
-            //-   a.bd-toc-link(href='/dashboard')
-            //-     | Dashboard
-            .bd-toc-item
-              a.bd-toc-link(href='/dashboard/profile')
-                | Profile
-            if user && user.role === "user"
-              .bd-toc-item
-                a.bd-toc-link(href='/dashboard/courses')
-                  | Courses
-            end
-            if user && user.role === "partner"
-              .bd-toc-item
-                a.bd-toc-link(href='/dashboard/packages')
-                  | Packages
-            end
-            if user && user.role === "admin"
-              .bd-toc-item
-                a.bd-toc-link(href='/dashboard')
-                  | List courses            
-              .bd-toc-item
-                a.bd-toc-link(href='/dashboard/admin/packages')
-                  | Packages
-              .bd-toc-item
-                a.bd-toc-link(href='/dashboard/admin/packages-request')
-                  | Request Packages
-            end
+          include partials/dashboard-sidebar
         main.col-12.col-md-9.col-xl-10.pr-md-5.pl-md-5.bd-content(role='main')
           block content
+    include faucet-modal
     script(src='/js/jquery.js')
     script(src='/js/bootstrap.js')
     script(src='/js/popper.js')

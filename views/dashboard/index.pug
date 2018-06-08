@@ -1,16 +1,16 @@
 extends ../dashboard-layout
 
 block content
-    .mt-5
-      table.table
-        thead
+  .mt-5
+    table.table
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') Course name
+          th(scope='col') Created at
+      tbody
+        each course, index in courses
           tr
-            th(scope='col') #
-            th(scope='col') Course name
-            th(scope='col') Created at
-        tbody
-          each course, index in courses
-            tr
-              th(scope='row')= index + 1
-              td= course.name
-              td= course.status === 1 ? moment(course.createdAt).format('MMM DD YYYY') : 'Coming soon'
+            th(scope='row')= index + 1
+            td= course.name
+            td= course.status === 1 ? moment(course.createdAt).format('MMM DD YYYY') : 'Coming soon'
