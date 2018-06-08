@@ -45,7 +45,7 @@ userSchema.pre("save", function save(next) {
         if (packages) {
           const packages_id = [];
           packages.forEach((item: any) => { packages_id.push(item.package_id); });
-          Package.find({_id: packages_id}).select("course").exec((err, dataPackages: any) => {
+          Package.find({_id: packages_id}).exec((err, dataPackages: any) => {
             const data = {};
             for (let i = 0; i < dataPackages.length; i++ ) {
               const course = dataPackages[i]["course"];
