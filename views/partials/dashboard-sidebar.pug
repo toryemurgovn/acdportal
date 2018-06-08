@@ -1,0 +1,33 @@
+nav#bd-docs-nav.bd-links.collapse.show(style='')
+  .bd-toc-item
+    a.bd-toc-link(href='/dashboard/profile')
+      | Profile
+  if user && user.role === "user"
+    .bd-toc-item
+      a.bd-toc-link(href='/dashboard/courses')
+        | Courses
+  end
+  if user && user.role === "partner"
+    .bd-toc-item
+      a.bd-toc-link(href='/dashboard/packages')
+        | Packages
+  end
+  if user && user.role === "admin"
+    .bd-toc-item
+      a.bd-toc-link(href='/dashboard')
+        | List courses            
+    .bd-toc-item
+      a.bd-toc-link(href='/dashboard/admin/packages')
+        | Packages
+    .bd-toc-item
+      a.bd-toc-link(href='/dashboard/admin/packages-request')
+        | Request Packages
+  end
+  if user && user.role === "user"  
+    .bd-toc-item.faucet-info-menu
+      .alert.alert-info(role="alert").text-center
+        strong Total balance:
+        #total-faucet-balance 0 BTC
+        button.mt-3.btn.btn-success.btn-sm.btn-block(type='button', data-toggle="modal", data-target="#faucetModal") Get Coin
+        p
+          a#latest-tx.mt-3(href="#", target="_blank")

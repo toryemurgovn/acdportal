@@ -62,7 +62,47 @@ $(document).ready(() => {
       location.reload();
     });
   });
+
+  setInterval(() => {
+    // update faucet balance
+    getTotalFaucetBalance();
+  }, 3000);
+
+  $("#faucetModal .btn-get-coin").on("click", (event) => {
+    event.preventDefault();
+    const walletAddress = $("#faucetModal .faucet-getcoin-wallet").val();
+    if (walletAddress) {
+      $.ajax({
+        url: "/api/faucet/send-coin-to-address",
+        method: "POST",
+        dataType: "json",
+        data: { wallet: walletAddress }
+      }).done((data) => {
+        if (data.code || data.code === 200) {
+          $("#faucetModal .transaction-link").attr("href", data.tx).text("Click here to see the transaction detail");
+          $(".faucet-info-menu #latest-tx").attr("href", data.tx).text("Your latest Tx");
+        }
+      });
+    }
+  });
 });
+
+$("#faucetModal").on("shown.bs.modal", function () {
+  $("#faucetModal .transaction-link").text("");
+  $("#faucetModal .faucet-getcoin-wallet").trigger("focus");
+});
+
+const getTotalFaucetBalance = () => {
+  $.ajax({
+    url: "/api/faucet/get-faucet-balance",
+    method: "GET"
+  }).done((data) => {
+    if (data.balance) {
+      data.balance = parseFloat(data.balance).toFixed(2);
+      $(".faucet-info-menu #total-faucet-balance").text(data.balance + " " + data.symbol);
+    }
+  });
+};
 
 const getPackages = () => {
   $.ajax({

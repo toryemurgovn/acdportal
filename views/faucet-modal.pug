@@ -1,0 +1,16 @@
+#faucetModal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+  .modal-dialog.modal-dialog-centered(role='document')
+    .modal-content
+      .modal-header
+        h5.modal-title Testnet Faucet
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+      .modal-body
+        .form-group
+          label
+            | Enter your wallet address and receive coins
+          input.faucet-getcoin-wallet.form-control(type="text", name="wallet_address", placeholder="Example: 2NDMZHUxtW6FWnwVTACJawVkcZ5aF7yTnja")
+        .form-group
+          button.btn-get-coin.form-control.btn.btn-outline-primary(type='button') Get
+      .modal-footer.tx-link
+        a.transaction-link.btn.btn-light(href="#", target="_blank")
