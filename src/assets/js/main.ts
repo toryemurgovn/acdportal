@@ -418,8 +418,13 @@ $(document).ready(function () {
 
   jAssignment7.on("click", (event) => {
     event.preventDefault();
+    const nonce = $("input[name=block3nonce]").val();
+    if (!nonce) {
+      alert("Please input data!");
+      return;
+    }
     const data = {
-      nonce: $("input[name=block3nonce]").val()
+      nonce: nonce
     };
 
     $.ajax({
@@ -442,10 +447,24 @@ $(document).ready(function () {
 
   jAssignment8.on("click", (event) => {
     event.preventDefault();
+    const name = $("input[name=block4name]").val();
+    const amount = $("input[name=block4amount]").val();
+    const difficult = $("input[name=block4difficult]").val();
+
+    if (!difficult) {
+      alert("Please input data!");
+      return;
+    }
+
+    if (difficult < 1) {
+      alert("The difficulty should not less than 1");
+      return;
+    }
+
     const data = {
-      name: $("input[name=block4name]").val(),
-      amount: $("input[name=block4amount]").val(),
-      difficult: $("input[name=block4difficult]").val(),
+      name: name,
+      amount: amount,
+      difficult: difficult,
     };
 
     $.ajax({
